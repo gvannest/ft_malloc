@@ -6,13 +6,13 @@
 /*   By: gvannest <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 17:14:41 by gvannest          #+#    #+#             */
-/*   Updated: 2019/12/13 17:37:05 by gvannest         ###   ########.fr       */
+/*   Updated: 2019/12/20 14:49:53 by gvannest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_malloc.h"
 
-int		main(int argc, char **argv)
+int		main()
 {
 	return (0);
 }

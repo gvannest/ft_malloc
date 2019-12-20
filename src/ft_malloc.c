@@ -1,32 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_malloc.h                                        :+:      :+:    :+:   */
+/*   ft_malloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gvannest <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/13 17:15:20 by gvannest          #+#    #+#             */
-/*   Updated: 2019/12/20 18:20:37 by gvannest         ###   ########.fr       */
+/*   Created: 2019/12/13 17:21:19 by gvannest          #+#    #+#             */
+/*   Updated: 2019/12/20 18:07:48 by gvannest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_MALLOC_H
-# define FT_MALLOC_H
+#include "ft_malloc.h"
 
-# include <sys/mman.h>
-# include <stdlib.h>
-
-# define TINY_MAX_SIZE		1024
-# define SMALL_MAX_SIZE		8192
-# define TINY_PAGES			32
-# define SMALL_PAGES		244
-
-typedef struct		s_mallocptr
+void	*ft_malloc(size_t size)
 {
-	void	*tinychk;
-	void	*smallchk;
-}					t_mallocptr;
 
-extern t_mallocptr	g_mallocptr;
+}
 
-#endif
+void*	call_mmap(size_t size)
+{
+	void *ptr;
+
+	ptr = NULL;
+	if (size < TINY_SIZE)
+		ptr = mmap(0, getpagesize() * TINY_PAGES, PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
+	else if (size < SMALL_SIZE) 
+		ptrk = mmap(0, getpagesize() * SMALL_PAGES, PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
+	return ptr;
+}
