@@ -12,19 +12,30 @@
 
 #include "ft_malloc.h"
 
-void	*ft_malloc(size_t size)
+
+static void		*ft_tiny(size_t size, void *ptr)
 {
-
-}
-
-void*	call_mmap(size_t size)
-{
-	void *ptr;
-
-	ptr = NULL;
-	if (size < TINY_SIZE)
-		ptr = mmap(0, getpagesize() * TINY_PAGES, PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
-	else if (size < SMALL_SIZE) 
-		ptrk = mmap(0, getpagesize() * SMALL_PAGES, PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
+	(void)size;
+	if (!g_mallocptr.tinychk)
+	{
+		g_mallocptr.tinychk = call_mmap_tiny();
+		init_free_heap(g_mallocptr.tinychk, getpagesize() * TINY_PAGES, NULL);
+	}
 	return ptr;
 }
+
+void			*ft_malloc(size_t size)
+{
+	void	*ptr;
+
+	ptr = NULL;
+	if (size)
+		if (size < TINY_MAX_SIZE)
+			ptr =  ft_tiny(size, ptr);
+//		else if (size < SMALL_MAX_SIZE)
+//			ptr = ft_small(size, ptr);
+//		else
+//			ptr = ft_large(size, ptr);
+	return (ptr);
+}
+

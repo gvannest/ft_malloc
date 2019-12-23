@@ -13,13 +13,13 @@
 # COMPILATION
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
-ADDFLAGS =
+ADDFLAGS = -g
 
 # DEFAULT RULE
 DEFRULE = all
 
 # BINARY
-NAME = ft_malloc
+NAME = ft_malloc_exec
 
 # PATHS
 SRC_PATH = ./src/
@@ -32,7 +32,10 @@ INC_PATH = ./includes_malloc\
 SRC_NAME = \
     main_test.c \
     globals.c \
-    ft_malloc.c 
+    ft_malloc.c \
+	utils_mmap.c \
+	free_list_mgmt.c
+	
 
 OBJ_NAME = $(SRC_NAME:.c=.o)
 
@@ -41,7 +44,7 @@ SRC = $(addprefix $(SRC_PATH),$(SRC_NAME))
 OBJ = $(addprefix $(OBJ_PATH),$(OBJ_NAME))
 
 # FLAGS
-CPPFLAGS = -I./includes_malloc/ -I../libft/includes
+CPPFLAGS = -I./includes_malloc/ -I./libft/includes
 LDFLAGS = -L./libft/
 LFT = -lft
 LIBFT = $(LDFLAGS) $(LFT)
@@ -82,7 +85,6 @@ libftcomp:
 $(NAME): $(OBJ)
 	@echo -e "--$(LOG_CLEAR)$(LOG_MAGENTA)$(NAME)$(LOG_NOCOLOR)....................... $(LOG_ORANGE)assembling$(LOG_NOCOLOR)$(LOG_UP)"
 	@$(CC) $(CFLAGS) $(ADD_FLAGS) $(LIBFT) $(OBJ) -o $@
-	@mv $(NAME) ..
 	@echo -e "--$(LOG_CLEAR)$(LOG_CYAN)$(NAME)$(LOG_NOCOLOR) compiled................. $(LOG_GREEN)✓$(LOG_NOCOLOR)"
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
@@ -104,7 +106,7 @@ clean:
 .PHONY: fclean
 fclean: clean
 	@echo -e "$(LOG_CLEAR)$(LOG_BLUE)fclean $(NAME)$(LOG_NOCOLOR)"
-	@rm -f ../$(NAME)
+	@rm -f $(NAME)
 
 .PHONY: re
 re: fclean all

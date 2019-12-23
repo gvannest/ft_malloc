@@ -11,9 +11,12 @@
 /* ************************************************************************** */
 
 #include "ft_malloc.h"
+#include <stdio.h>
 
-int		main()
+int		main(void)
 {
+	ft_malloc(512);
+
 	return (0);
 }
 

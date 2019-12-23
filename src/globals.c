@@ -12,4 +12,4 @@
 
 #include "ft_malloc.h"
 
-t_mallocptr		g_mallocptr = { .tinychk = 0, .smallchk = 0 };
+t_mallocptr		g_mallocptr = { .tinychk = NULL, .smallchk = NULL };
