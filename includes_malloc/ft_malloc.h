@@ -6,7 +6,7 @@
 /*   By: gvannest <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 17:15:20 by gvannest          #+#    #+#             */
-/*   Updated: 2019/12/20 18:20:37 by gvannest         ###   ########.fr       */
+/*   Updated: 2020/01/02 13:51:41 by gvannest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-# define P_FLAG 1
+# define A_FLAG 4
 # define M_FLAG 2
+# define P_FLAG 1
 
 # define TINY_MAX_SIZE		1025
 # define SMALL_MAX_SIZE		8193
@@ -77,5 +78,7 @@ void				*call_mmap_small(void);
  */
 void				init_free_heap(void *heap_ptr, size_t heap_size, t_freechunk *last_freechunk);
 
+size_t				ft_add_flags_to_size(size_t size_init, char a, char m, char p);
+size_t				ft_size_wo_flags(size_t size);
 
 #endif
