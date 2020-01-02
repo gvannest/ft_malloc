@@ -1,14 +1,8 @@
 
 #include "ft_malloc.h"
 
-void*			call_mmap_tiny(void)
+void*			call_mmap(size_t call_size)
 {
-	return (mmap(0, getpagesize() * TINY_PAGES, PROT_READ | PROT_WRITE,
-			MAP_ANONYMOUS | MAP_PRIVATE, -1, 0));
-}
-
-void*			call_mmap_small(void)
-{
-	return (mmap(0, getpagesize() * SMALL_PAGES, PROT_READ | PROT_WRITE,
+	return (mmap(0, call_size, PROT_READ | PROT_WRITE,
 			MAP_ANONYMOUS | MAP_PRIVATE, -1, 0));
 }
