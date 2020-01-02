@@ -6,7 +6,7 @@
 #    By: gvannest <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/03 14:13:27 by gvannest          #+#    #+#              #
-#    Updated: 2019/12/20 17:23:59 by gvannest         ###   ########.fr        #
+#    Updated: 2020/01/02 13:50:05 by gvannest         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,8 @@ SRC_NAME = \
     globals.c \
     ft_malloc.c \
 	utils_mmap.c \
-	free_list_mgmt.c
+	free_list_mgmt.c \
+	size_flags.c
 	
 
 OBJ_NAME = $(SRC_NAME:.c=.o)
