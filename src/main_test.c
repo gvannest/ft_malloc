@@ -6,7 +6,7 @@
 /*   By: gvannest <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 17:14:41 by gvannest          #+#    #+#             */
-/*   Updated: 2020/01/02 14:43:39 by gvannest         ###   ########.fr       */
+/*   Updated: 2020/01/03 17:35:09 by gvannest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@
 
 int		main(void)
 {
+	char	*ptr;
+
+	free(ptr);
 //	ft_malloc(512);
 //
 	srand(time(NULL));

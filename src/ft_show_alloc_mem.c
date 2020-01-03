@@ -1,29 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   size_flags.c                                       :+:      :+:    :+:   */
+/*   ft_show_alloc_mem.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gvannest <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/02 13:28:54 by gvannest          #+#    #+#             */
-/*   Updated: 2020/01/03 14:43:18 by gvannest         ###   ########.fr       */
+/*   Created: 2020/01/03 17:16:47 by gvannest          #+#    #+#             */
+/*   Updated: 2020/01/03 17:55:51 by gvannest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_malloc.h"
 
-size_t		ft_add_flags_to_size(size_t size_init, char a, char m, char p)
+void		show_alloc_mem()
 {
-	return (size_init | (a * A_FLAG) | (m * M_FLAG) | (p * P_FLAG));
-}
+	void	*tiny;
+	void	*small;
 
-size_t		ft_size_wo_flags(size_t size)
-{
-	return (size & 0xFFFFFFFFFFFFFFF8);
-}
+	tiny = g_ptr.tiny_begin;
+	small = g_ptr.small_begin;
+	ft_printf("TINY : %p\n", tiny);
+	while (tiny)
+	{
+		ft_printf("%p - %p : %zu octets\n", )
+	}
 
-size_t		ft_chunk_size(void *ptr)
-{
-	return (size_t)(*(ptr + sizeof(size_t)));
 }
-

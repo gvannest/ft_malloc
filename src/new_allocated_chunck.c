@@ -67,12 +67,12 @@ static void		update_header_allocated_chunck(t_freechunk *selected_chunk, size_t 
 	selected_chunk->mchunk_size = size_user + sizeof(t_allocchunk);
 }
 
-
-void			*new_allocated_chunk(t_freechunk* selected_chunk, size_t size_user)
+void			*new_allocated_chunk(void* selected_chunk, size_t size_user)
 {
 	t_freechunk		*next_free_chunk;
 	t_freechunk		*prev_free_chunk;
 
+	selected_chunk = (t_freechunk*)selected_chunk;
 	next_free_chunk = selected_chunk->next_freechunk;
 	prev_free_chunk = selected_chunk->prev_freechunk;
 	if (selected_chunk->mchunk_size > size_user)
