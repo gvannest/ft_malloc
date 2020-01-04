@@ -6,7 +6,7 @@
 /*   By: gvannest <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/02 16:06:36 by gvannest          #+#    #+#             */
-/*   Updated: 2020/01/03 16:21:04 by gvannest         ###   ########.fr       */
+/*   Updated: 2020/01/04 15:56:03 by gvannest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void			ft_free(void *ptr)
 	ptr = ptr - HDR_SIZE_ALLOC;
 	chunk_size = ft_chunk_size(ptr);
 	size_wo_flags = ft_size_wo_flags(chunk_size);
-	if (!size_wo_flags)
+	if (!size_wo_flags) //a voir ce qu'on fait peut etre virer le header
 		return;
 	if (chunk_size & M_FLAG)
 		if (ft_free_large(ptr, size_wo_flags) == -1)

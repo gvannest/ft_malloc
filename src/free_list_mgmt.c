@@ -6,11 +6,11 @@ void		init_free_list(void *ptr, void **end, size_t size)
 	t_freechunk t_chunk;
 
 	t_chunk.mchunk_prevsize = 0;
-	t_chunk.mchunk_size = size;
+	t_chunk.mchunk_size = ft_add_flags_to_size(size, 0, 0, 0);
 	t_chunk.prev_freechunk = *end;
 	t_chunk.next_freechunk = NULL;
 
-	*(t_freechunk*)ptr = t_chunk;
+	*ptr = t_chunk;
 	*end = ptr;
 }
 
@@ -27,39 +27,45 @@ void		*search_free(void *free_list, size_t size_user)
 	return NULL;
 }
 
-static void		ft_add_free_block(void *ptr, t_freechunk *prev_chk)
+static void		ft_add_free_block(void *ptr, void *prev_chk)
 {
 	t_freechunk t_chunk;
 	
+	prev_chk = (t_freechunk*)prev_chk;
 	t_chunk.mchunk_prevsize = (size_t)(*ptr);
 	t_chunk.mchunk_size = ft_chunk_size(ptr);
 	t_chunk.prev_freechunk = prev_chk;
 	t_chunk.next_freechunk = prev_chk->next_freechunk;
 
 	*(t_freechunk*)ptr = t_chunk;
+
 }
 
-void			ft_change_header_to_free(void *ptr, void **begin, void **end)
+void			ft_change_header_to_free(void *ptr, void **begin_free, void **end_free)
 {
-	void *begin_copy;
+	void *current_free;
 
-	begin_copy = *begin;
-	if (!(*begin))
+	current_free = *begin_free;
+	if (!(*begin_free))
 	{
-		init_free_heap(ptr, end, ft_chunk_size(ptr));
-		*begin = ptr;
+		init_free_list(ptr, end_free, ft_chunk_size(ptr));
+		*begin_free = ptr;
 		return;
 	}
-	begin_copy = (t_freechunk*)begin_copy;
-	while (begin_copy < ptr && begin_copy)
-		begin_copy = begin_copy->next_freechunk
-	if (!(begin_copy))
+	current_free = (t_freechunk*)current_free;
+	while (current_free && current_free < ptr)
+		current_free = current_free->next_freechunk
+	if (!(current_free))
 	{
-		begin_copy = *((t_freechunk**)(end));
-		ft_add_free_block(ptr, begin_copy);
+		ft_add_free_block(ptr, *end_free);
 		*end = ptr;
+		ptr->prev_freechunk->next_freechunk = ptr;
 	}
 	else
-		ft_add_free_block(ptr, begin_copy->prev_freechunk);
+	{
+		ft_add_free_block(ptr, (void*)(current_free->prev_freechunk));
+		current_free->prev_freechunk = ptr;
+		ptr->prev_freechunk->next_freechunk = ptr;
+	}
 }
 

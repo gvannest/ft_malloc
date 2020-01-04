@@ -6,38 +6,46 @@
 /*   By: gvannest <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 17:21:19 by gvannest          #+#    #+#             */
-/*   Updated: 2020/01/03 18:15:37 by gvannest         ###   ########.fr       */
+/*   Updated: 2020/01/04 17:49:51 by gvannest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_malloc.h"
 
-static void		*ft_tiny_small(size_t size, size_t call_size, char flag)
+static void		ft_set_header_footer_heap(void *ptr_heap, size_t call_size)
+{
+	t_heapfooter	t_footer;
+	t_heapheader	t_header;
+
+	t_footer.end_of_zone = END_ZONE_FLAG;
+	t_footer.next_heap_hdr = NULL;
+	if (!g_ptr.begin_heap)
+		t_header.prev_heap_ftr = NULL;
+
+	*(ptr_heap + call_size - FTR_HEAP) = t_footer;
+	*(ptr_heap) = t_header;
+}
+
+static void		*ft_tiny_small(size_t size, size_t call_size, void **begin_free, void **end_free)
 {
 	void	*ptr;
-	void	**begin_free;
-	void	**end_free;
-	void	**begin;
 
 	ptr = NULL;
-	begin_free = flag == 1 ? &(g_ptr.tiny_free_begin) : &(g_ptr.small_free_begin);
-	end_free = flag == 1 ? &(g_ptr.tiny_free_end) : &(g_ptr.small_free_end);
-	begin = flag == 1 ? &(g_ptr.tiny_begin) : &(g_ptr.small_end);
-	if (!(*begin))
+	if (!(*begin_free))
 	{
-		*begin = call_mmap(call_size);
-		(!g_ptr.begin_heap) ? g_ptr.begin_heap = *begin;
-		*begin_free = *begin;
-		init_free_list(*begin_free, end_free, call_size);
-		return new_allocated_chunck(*begin, size);
+		*begin_free = call_mmap(call_size);
+		init_free_list(*begin_free + HDR_HEAP, end_free, call_size - FTR_HEAP - HDR_HEAP);
+		ft_set_header_footer_heap(*begin_free, call_size);
+		(!g_ptr.begin_heap) ? g_ptr.begin_heap = *begin_free : 0;
+		return new_allocated_chunck(*begin_free, size, begin_free, end_free);
 	}
 	else if ((ptr = search_free(*begin_free)))
-		return new_allocated_chunck(ptr, size);
+		return new_allocated_chunck(ptr, size, begin_free, end_free);
 	else
 	{
 		ptr = call_mmap(call_size);
 		init_free_list(ptr, end_free, call_size);
-		return new_allocated_chunck(ptr, size);
+		return new_allocated_chunck(ptr, size, begin_free, end_free);
 	}
 }
 
@@ -48,18 +56,23 @@ static void		*ft_large(size_t size, void *ptr)
 	return (ptr + sizeof(t_allocchunk));
 }
 
+static size_t	align_size(size_t size_user)
+{
+	return ((size_user + 0x8) & 0xfffffffffffffff8);
+}
+
 void			*ft_malloc(size_t size)
 {
 	if (size)
 	{
+		size = align_size(size);
 		if (size < TINY_MAX_SIZE)
-			return (ft_tiny_small(size, getpagesize() * TINY_PAGES, 1));
+			return (ft_tiny_small(size, getpagesize() * TINY_PAGES, &(g_ptr.tiny_free_begin), &(g_ptr.tiny_free_end)));
 		else if (size < SMALL_MAX_SIZE)
-			return (ft_tiny_small(size, getpagesize() * SMALL_PAGES, 2));
+			return (ft_tiny_small(size, getpagesize() * SMALL_PAGES, &(g_ptr.small_free_begin), &(g_ptr.small_free_end)));
 		else
 			return (ft_large(size, ptr));
 	}
 	else
 		return NULL;
 }
-
