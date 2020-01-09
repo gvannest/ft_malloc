@@ -6,7 +6,7 @@ void		init_free_list(void *ptr, void **end, size_t size)
 	t_freechunk t_chunk;
 
 	t_chunk.mchunk_prevsize = 0;
-	t_chunk.mchunk_size = ft_add_flags_to_size(size, 0, 0, 0);
+	t_chunk.mchunk_size = ft_add_flags_to_size(size, 1, 0, 0);
 	t_chunk.prev_freechunk = *end;
 	t_chunk.next_freechunk = NULL;
 
@@ -33,7 +33,7 @@ static void		ft_add_free_block(void *ptr, void *prev_chk)
 	
 	prev_chk = (t_freechunk*)prev_chk;
 	t_chunk.mchunk_prevsize = (size_t)(*ptr);
-	t_chunk.mchunk_size = ft_chunk_size(ptr);
+	t_chunk.mchunk_size = ft_chunk_size(ptr) | A_FLAG;
 	t_chunk.prev_freechunk = prev_chk;
 	t_chunk.next_freechunk = prev_chk->next_freechunk;
 

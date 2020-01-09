@@ -6,7 +6,7 @@
 /*   By: gvannest <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 17:15:20 by gvannest          #+#    #+#             */
-/*   Updated: 2020/01/02 13:51:41 by gvannest         ###   ########.fr       */
+/*   Updated: 2020/01/09 17:20:31 by cpaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,21 +26,22 @@
 # define TINY_PAGES			32
 # define SMALL_PAGES		244
 
-# define HDR_SIZE_ALLOC	16
-# define HDR_SIZE_FREE	32
+# define HDR_SIZE_ALLOC		16
+# define HDR_SIZE_FREE		32
 
-/*
- * Is it going to pass the norminette?
- * That is how they deal with it in the actual glibc malloc source
- * code
- */
-#define chunk2mem(p)   ((void*)((char*)(p) + 2*SIZE_SZ))
-#define mem2chunk(mem) ((mchunkptr)((char*)(mem) - 2*SIZE_SZ))
+# define FTR_HEAP			16
+# define HDR_HEAP			8
+
+# define END_ZONE_FLAG		0x8000000000000000
+# define END_HEAP_FLAG		0x4000000000000000
 
 typedef struct		s_mallocptr
 {
-	void			*tinychk;
-	void			*smallchk;
+	void			*tiny_free_begin;
+	void			*tiny_free_end;
+	void			*small_free_begin;
+	void			*small_free_end;
+	void			*begin_heap;
 }					t_mallocptr;
 
 /*
@@ -64,6 +65,17 @@ typedef struct		s_freechunk
 	struct s_freechunk		*prev_freechunk;
 	struct s_freechunk		*next_freechunk;
 }							t_freechunk;
+
+typedef struct		s_heapheader
+{
+	void			*current_footer;
+}					t_heapheader;
+
+typedef struct		s_heapfooter
+{
+	size_t			end_of_zone;
+	void			*next_heap_hdr;
+}					t_heapfooter;
 
 extern t_mallocptr	g_mallocptr;
 
