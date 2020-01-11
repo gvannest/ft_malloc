@@ -1,71 +1,79 @@
 #include "ft_malloc.h"
-#include <stdio.h>
 
-void		init_free_list(void *ptr, void **end, size_t size)
+void		ft_first_free_chunk(void *ptr, size_t size, t_freechunk *prev_chk)
 {
 	t_freechunk t_chunk;
 
 	t_chunk.mchunk_prevsize = 0;
 	t_chunk.mchunk_size = ft_add_flags_to_size(size, 1, 0, 0);
-	t_chunk.prev_freechunk = *end;
-	t_chunk.next_freechunk = NULL;
+	t_chunk.prev_freechunk = prev_chk;
+	if (prev_chk)
+		t_chunk.next_freechunk = prev_chk->next_freechunk;
+	else
+		t_chunk.next_freechunk = NULL;
 
-	*ptr = t_chunk;
-	*end = ptr;
+	*(t_freechunk*)ptr = t_chunk;
 }
 
 void		*search_free(void *free_list, size_t size_user)
 {
-	free_list = (t_freechunk*)free_list;
-	while (free_list)
+	t_freechunk		*list_copy;
+
+	list_copy = (t_freechunk*)free_list;
+	while (list_copy)
 	{
-		if (ft_size_wo_flags(free_list->mchunk_size) >= size_user)
-			return (void*)free_list;
+		if (ft_size_wo_flags(list_copy->mchunk_size) >= size_user + HDR_SIZE_ALLOC)
+			return (void*)list_copy;
 		else
-			free_list = free_list->next_freechunk;
+			list_copy = list_copy->next_freechunk;
 	}
 	return NULL;
 }
 
-static void		ft_add_free_block(void *ptr, void *prev_chk)
+static void		ft_add_free_block(void *ptr, t_freechunk *prev_chk, t_freechunk *next_chk)
 {
 	t_freechunk t_chunk;
 	
-	prev_chk = (t_freechunk*)prev_chk;
-	t_chunk.mchunk_prevsize = (size_t)(*ptr);
-	t_chunk.mchunk_size = ft_chunk_size(ptr) | A_FLAG;
+	t_chunk.mchunk_prevsize = ((t_allocchunk*)ptr)->mchunk_prevsize;
+	t_chunk.mchunk_size = (((t_allocchunk*)ptr)->mchunk_size) | F_FLAG;
 	t_chunk.prev_freechunk = prev_chk;
-	t_chunk.next_freechunk = prev_chk->next_freechunk;
+	t_chunk.next_freechunk = next_chk;
 
 	*(t_freechunk*)ptr = t_chunk;
 
 }
 
-void			ft_change_header_to_free(void *ptr, void **begin_free, void **end_free)
+static void		ft_insert_free_list(void *ptr, void **begin_free)
 {
-	void *current_free;
+	t_freechunk		*prev_free;
+	t_freechunk		*next_free;
 
-	current_free = *begin_free;
-	if (!(*begin_free))
+	prev_free = ft_prev_free(ptr, (t_freechunk*)(*begin_free));
+	next_free = NULL;
+	if (*begin_free > ptr)
 	{
-		init_free_list(ptr, end_free, ft_chunk_size(ptr));
+		ft_add_free_block(ptr, NULL, *begin_free);
+		((t_freechunk*)(*begin_free))->prev_freechunk = (t_freechunk*)ptr;
 		*begin_free = ptr;
-		return;
-	}
-	current_free = (t_freechunk*)current_free;
-	while (current_free && current_free < ptr)
-		current_free = current_free->next_freechunk
-	if (!(current_free))
-	{
-		ft_add_free_block(ptr, *end_free);
-		*end = ptr;
-		ptr->prev_freechunk->next_freechunk = ptr;
 	}
 	else
 	{
-		ft_add_free_block(ptr, (void*)(current_free->prev_freechunk));
-		current_free->prev_freechunk = ptr;
-		ptr->prev_freechunk->next_freechunk = ptr;
+		next_free = prev_free->next_freechunk;
+		ft_add_free_block(ptr, prev_free, next_free);
+		prev_free->next_freechunk = (t_freechunk*)ptr;
+		if (next_free)
+			next_free->prev_freechunk = ptr;
 	}
 }
 
+void			ft_change_header_to_free(void *ptr, void **begin_free)
+{
+
+	if (!(*begin_free))
+	{
+		ft_first_free_chunk(ptr, (((t_allocchunk*)ptr)->mchunk_size), NULL);
+		*begin_free = ptr;
+	}
+	else
+		ft_insert_free_list(ptr, begin_free);
+}

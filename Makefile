@@ -6,7 +6,7 @@
 #    By: gvannest <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/03 14:13:27 by gvannest          #+#    #+#              #
-#    Updated: 2020/01/02 16:55:44 by gvannest         ###   ########.fr        #
+#    Updated: 2020/01/10 11:41:18 by gvannest         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,10 @@ SRC_NAME = \
 	utils_mmap.c \
 	free_list_mgmt.c \
 	size_flags.c \
-	ft_free.c
+	ft_free.c \
+	large_chunk.c \
+	new_allocated_chunck.c \
+	ft_show_alloc_mem.c
 	
 
 OBJ_NAME = $(SRC_NAME:.c=.o)
