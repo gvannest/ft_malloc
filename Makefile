@@ -39,7 +39,9 @@ SRC_NAME = \
 	ft_free.c \
 	large_chunk.c \
 	new_allocated_chunck.c \
-	ft_show_alloc_mem.c
+	ft_show_alloc_mem.c \
+	ft_realloc.c \
+	headers.c
 	
 
 OBJ_NAME = $(SRC_NAME:.c=.o)

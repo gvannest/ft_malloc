@@ -61,9 +61,7 @@ static void		*ft_large(size_t size)
 	size_t	call_size;
 
 	ptr = NULL;
-	printf("ALIGN SIZE : %lu\n", size);
 	call_size = align_large_size(size + HDR_HEAP + FTR_HEAP + HDR_SIZE_ALLOC);
-	printf("CALL SIZE LARGE : %lu\n", call_size);
 	ptr = call_mmap(call_size);
 	ft_large_allocation(ptr + HDR_HEAP, call_size);
 	ft_set_header_footer_heap(ptr, call_size);

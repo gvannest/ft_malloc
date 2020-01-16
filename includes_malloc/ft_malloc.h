@@ -76,7 +76,7 @@ extern t_ptr	g_ptr;
 
 void				*ft_malloc(size_t size);
 void				ft_free(void *ptr);
-
+void				*ft_realloc(void *ptr, size_t size);
 void				*call_mmap(size_t call_size);
 
 size_t				ft_add_flags_to_size(size_t size_init, char a, char m, char p);
@@ -86,7 +86,7 @@ void				*search_free(void *free_list, size_t size_user);
 void				ft_change_header_to_free(void *ptr, void **begin_free);
 void				ft_large_allocation(void *ptr, size_t size);
 void				*new_allocated_chunk(void* selected_chunk, size_t size_user, void **begin);
-
+void				create_new_free_chunk(void **begin_free,t_freechunk *selected_chunk, size_t size_user, t_heapheader *current_heap);
 size_t				ft_add_flags_to_size(size_t size_init, char a, char m, char p);
 size_t				ft_size_wo_flags(size_t size);
 void				*prev_footer_ptr(void *ptr_heap);
@@ -101,6 +101,17 @@ void				print_free_chunk(void *ptr_free);
 void				print_alloc_chunk(void *ptr_alloc);
 void				print_info_heap(void *ptr_heap, size_t heap_size);
 
-t_freechunk			*ft_prev_free(void *ptr, t_freechunk *begin_free);
+t_freechunk			*ft_prev_free(void *ptr, void *begin_free);
 
+void				set_prev_size(size_t prev_size, void *chunk);
+void				set_size(size_t size, void *chunk);
+void				set_prev_freechunk(t_freechunk *prev, void *chunk);
+void				set_next_freechunk(t_freechunk *next, void *chunk);
+t_freechunk			ft_set_header_free(size_t prev_size, size_t chunk_size, t_freechunk *prev_chunk, t_freechunk *next_chunk);
+t_allocchunk		ft_set_header_alloc(size_t prev_size, size_t chunk_size);
+void				ft_del_free_list(t_freechunk *chunk);
+size_t				ft_flags(size_t size);
+
+void	update_freelist(t_freechunk *prev_free, t_freechunk* current, t_freechunk *next_free);
 #endif
+ 

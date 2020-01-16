@@ -17,22 +17,30 @@
 
 int		main(void)
 {
-	int		*ptr;
-	char	*ptr2;
-	
-	ptr = NULL;
+	char *ptr1;
+	char *ptr2;
+	char *ptr3;
+	//char *ptr4;
+	//char *ptr5;
+
+	ptr1 = 0;
 	ptr2 = 0;
+	ptr3 = 0;
 
-	ptr = ft_malloc(0);
-	ptr2 = (char*)malloc(0);
+	ptr1 = (char*)ft_malloc(512);
+	ptr1[0] = 'y';
+	ptr1[1] = 'y';
+	ptr1[2] = 'y';
+	ptr1[3] = 'y';
+	ptr1[4] = 'y';
+	ptr1[511] = 'z';
+	ptr2 = ft_malloc(800);
+	ptr3 = ft_malloc(800);
+	ft_free(ptr2);
+	show_alloc_mem();
+	ft_realloc(ptr1, 400);
+	show_alloc_mem();
 
-	printf("%p\n", ptr);
-
-//	char *ptr1;
-//	char *ptr2;
-//	char *ptr3;
-//	char *ptr4;
-//	char *ptr5;
 
 //	ptr = ft_malloc(512);
 //	ptr5 = ft_malloc(13300);

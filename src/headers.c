@@ -32,24 +32,24 @@ void			set_next_freechunk(t_freechunk *next, void *chunk)
 	((t_freechunk*)chunk)->next_freechunk = next;
 }
 
-t_freechunk		set_header_free(size_t prev_size, size_t chunk_size, t_freechunk *prev_chunk, t_freechunk *next_chunk)
+t_freechunk		ft_set_header_free(size_t prev_size, size_t chunk_size, t_freechunk *prev_chunk, t_freechunk *next_chunk)
 {
 	t_freechunk		t_free;
 	
 	set_prev_size(prev_size, (void*)&t_free);
-	set_size(size, (void*)&t_free);
-	set_prev_freechunk(prev_chunk, &t_free)
-	set_next_freechunk(next_chunk, &t_free)
+	set_size(chunk_size, (void*)&t_free);
+	set_prev_freechunk(prev_chunk, &t_free);
+	set_next_freechunk(next_chunk, &t_free);
 
 	return t_free;
 }
 
-t_allocchunk	set_header_alloc(size_t prev_size, size_t chunk_size)
+t_allocchunk	ft_set_header_alloc(size_t prev_size, size_t chunk_size)
 {
 	t_allocchunk		t_alloc;
 
 	set_prev_size(prev_size, (void*)&t_alloc);
-	set_size(size, (void*)&t_alloc);
+	set_size(chunk_size, (void*)&t_alloc);
 
 	return t_alloc;
 }

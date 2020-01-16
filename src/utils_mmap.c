@@ -61,10 +61,12 @@ size_t		align_large_size(size_t size_user)
 }
 
 
-t_freechunk		*ft_prev_free(void *ptr, t_freechunk *begin_free)
+t_freechunk		*ft_prev_free(void *ptr, void *begin)
 {
 	t_freechunk *prev_chk;
+	t_freechunk *begin_free;
 
+	begin_free = (t_freechunk*)begin;
 	prev_chk = NULL;
 	while (begin_free && (void*)begin_free < ptr)
 	{

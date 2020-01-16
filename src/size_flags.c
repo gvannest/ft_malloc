@@ -24,5 +24,5 @@ size_t		ft_size_wo_flags(size_t size)
 
 size_t		ft_flags(size_t size)
 {
-	return (size & F_FLAG & M_FLAG & P_FLAG);
+	return (size & (F_FLAG | M_FLAG | P_FLAG));
 }
