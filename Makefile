@@ -10,9 +10,9 @@
 #                                                                              #
 # **************************************************************************** #
 
-# SET HOSTTYPE
-ifeq (${HOSTTYPE},)
-	$(shell export HOSTTYPE := $(shell uname -m)_$(shell uname -s))
+#ENV
+ifeq ($(HOSTTYPE),)
+	export HOSTTYPE=$(shell uname -m)_$(shell uname -s)
 endif
 
 # COMPILATION
@@ -29,7 +29,6 @@ NAME = libft_malloc_${HOSTTYPE}.so
 SYMLINK = libft_malloc.so
 
 # PATHS
-PWD = $(shell dirname `pwd`)
 SRC_PATH = ./src/
 OBJ_PATH = ./objs/
 LIBFT_PATH = ./libft/
@@ -96,18 +95,11 @@ all: libftcomp $(OBJ_PATH) $(NAME) Makefile
 libftcomp:
 	@make all -C $(LIBFT_PATH)
 
-$(NAME): $(OBJ) setenv
+$(NAME): $(OBJ)
 	@echo -e "--$(LOG_CLEAR)$(LOG_MAGENTA)$(NAME)$(LOG_NOCOLOR)....................... $(LOG_ORANGE)assembling$(LOG_NOCOLOR)$(LOG_UP)"
 	@$(CC) $(CFLAGS) $(SYSFLAG) $(ADD_FLAGS) $(LIBFT) $(OBJ) -o $@
 	@echo -e "--$(LOG_CLEAR)$(LOG_CYAN)$(NAME)$(LOG_NOCOLOR) compiled................. $(LOG_GREEN)✓$(LOG_NOCOLOR)"
-	ln -s $(NAME) $(SYMLINK)
-
-.PHONY: setenv
-setenv:
-	@echo -e "--$(LOG_CLEAR)$(LOG_MAGENTA)$(NAME)$(LOG_NOCOLOR)....................... $(LOG_ORANGE)Setting env vriables$(LOG_NOCOLOR)$(LOG_UP)"
-	@export $$(DYLD_LIBRARY_PATH)=$(PWD)
-	@export $$(DYLD_INSERT_LIBRARIES)=$(SYMLINK)
-	@export $$(DYLD_FORCE_FLAT_NAMESPACE)=1
+	ln -fs $(NAME) $(SYMLINK)
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@$(CC) $(CFLAGS) $(CPPFLAGS) $(ADDFLAGS) -c -o $@ $<

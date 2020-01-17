@@ -52,6 +52,9 @@ void			free(void *ptr)
 	size_t	chunk_size;
 	size_t	size_wo_flags;
 
+	show_alloc_mem();
+	if (!ptr && !find_current_heap(ptr))
+		return;
 	ptr = ptr - HDR_SIZE_ALLOC;
 	chunk_size = ((t_allocchunk*)ptr)->mchunk_size;
 	size_wo_flags = ft_size_wo_flags(chunk_size);
