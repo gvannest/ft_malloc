@@ -27,27 +27,27 @@ int		main(void)
 	ptr2 = 0;
 	ptr3 = 0;
 
-	ptr1 = (char*)ft_malloc(512);
+	ptr1 = (char*)malloc(512);
 	ptr1[0] = 'y';
 	ptr1[1] = 'y';
 	ptr1[2] = 'y';
 	ptr1[3] = 'y';
 	ptr1[4] = 'y';
 	ptr1[511] = 'z';
-	ptr2 = ft_malloc(800);
-	ptr3 = ft_malloc(800);
-	ft_free(ptr2);
+	ptr2 = malloc(800);
+	ptr3 = malloc(800);
+	free(ptr2);
 	show_alloc_mem();
-	ft_realloc(ptr1, 400);
+	realloc(ptr1, 400);
 	show_alloc_mem();
 
 
-//	ptr = ft_malloc(512);
-//	ptr5 = ft_malloc(13300);
-//	ptr2 = ft_malloc(5780);
-//	ptr1 = ft_malloc(512);
-//	ptr3 = ft_malloc(2845);
-//	ptr4 = ft_malloc(27800);
+//	ptr = malloc(512);
+//	ptr5 = malloc(13300);
+//	ptr2 = malloc(5780);
+//	ptr1 = malloc(512);
+//	ptr3 = malloc(2845);
+//	ptr4 = malloc(27800);
 /*	printf("ptr %p\n", ptr);
 	ptr[0] = 'y';
 	ptr[1] = 'o';
@@ -55,12 +55,12 @@ int		main(void)
 	ptr[3] = '0';
 	printf("coucou %s\n", ptr);
 	show_alloc_mem();
-	ft_free(ptr1);
-	ft_free(ptr);
-	ft_free(ptr2);
-	ft_free(ptr3);
-	ft_free(ptr4);
-	ft_free(ptr5);
+	free(ptr1);
+	free(ptr);
+	free(ptr2);
+	free(ptr3);
+	free(ptr4);
+	free(ptr5);
 	show_alloc_mem();
 
 

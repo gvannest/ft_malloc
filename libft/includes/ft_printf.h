@@ -68,7 +68,7 @@ void			ft_init_struct(t_lst *p);
 void			ft_buffer(const char c, t_lst *p);
 int				ft_control_flags(const char *format, t_lst *p);
 void			ft_clean_options(t_lst *p);
-void			ft_free_struct(t_lst *p);
+void			free_struct(t_lst *p);
 intmax_t		ft_cast_nsigned(t_lst *p, va_list ap);
 uintmax_t		ft_cast_nunsigned(t_lst *p, va_list ap);
 wchar_t			ft_cast_char(t_lst *p, va_list ap);

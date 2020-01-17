@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free.c                                          :+:      :+:    :+:   */
+/*   free.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gvannest <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -13,7 +13,7 @@
 #include "ft_malloc.h"
 
 
-static	void	ft_free_tinysmall(void *ptr, size_t size_wo_flags)
+static	void	free_tinysmall(void *ptr, size_t size_wo_flags)
 {
 	if (size_wo_flags < TINY_MAX_SIZE)
 		ft_change_header_to_free(ptr, &(g_ptr.tiny_free_begin));
@@ -32,7 +32,7 @@ static void		ft_update_prev_footer(void *ptr)
 		prev_footer->next_heap_hdr = current_footer->next_heap_hdr;
 }
 
-static	int		ft_free_large(void *ptr, size_t size_wo_flags)
+static	int		free_large(void *ptr, size_t size_wo_flags)
 {
 	t_heapfooter *footer;
 
@@ -45,7 +45,7 @@ static	int		ft_free_large(void *ptr, size_t size_wo_flags)
 	return munmap(ptr, size_wo_flags + HDR_HEAP + FTR_HEAP);
 }
 
-void			ft_free(void *ptr)
+void			free(void *ptr)
 {
 	// ATTENTION que faire si le pointeur n'existe pass? Que fairet le vrai malloc? a tester
 	// => VERIFIER S IL APPARTIENT A L'UNE DE NOS PAGES
@@ -59,9 +59,9 @@ void			ft_free(void *ptr)
 		return;
 	if (chunk_size & M_FLAG)
 	{
-		if (ft_free_large(ptr - HDR_HEAP, size_wo_flags) == -1)
+		if (free_large(ptr - HDR_HEAP, size_wo_flags) == -1)
 			ft_printf("\x1B[31mError while calling munmap on large chunk\x1B[0m\n");
 	}
 	else
-		ft_free_tinysmall(ptr, size_wo_flags);
+		free_tinysmall(ptr, size_wo_flags);
 }

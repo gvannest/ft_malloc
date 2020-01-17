@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_realloc.c                                       :+:      :+:    :+:   */
+/*   realloc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gvannest <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -16,9 +16,9 @@ static void *ft_new_alloc(void *ptr, size_t size, size_t old_size)
 {
 	void *new_ptr;
 
-	new_ptr = ft_malloc(size);
+	new_ptr = malloc(size);
 	ft_memcpy(new_ptr, ptr, old_size - HDR_SIZE_ALLOC);
-	ft_free(ptr);
+	free(ptr);
 	return new_ptr;
 }
 
@@ -106,7 +106,7 @@ static void	*ft_reduce_chunk(void *ptr, size_t size_user, size_t size_wo_flags, 
 	return (ptr);
 }
 
-void *ft_realloc(void *ptr, size_t size)
+void *realloc(void *ptr, size_t size)
 {
 	t_allocchunk	*next_chunk;
 	size_t			size_wo_flags;

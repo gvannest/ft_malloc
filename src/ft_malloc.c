@@ -70,7 +70,7 @@ static void		*ft_large(size_t size)
 }
 
 
-void			*ft_malloc(size_t size)
+void			*malloc(size_t size)
 {
 	size = align_size(size);
 	if (size < TINY_MAX_SIZE)
