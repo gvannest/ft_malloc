@@ -95,7 +95,7 @@ t_heapheader		*find_current_heap(void *ptr_chunk);
 size_t				align_size(size_t size_user);
 size_t				align_large_size(size_t size_user);
 
-void				show_alloc_mem();
+void				show_alloc_mem(void);
 
 void				print_free_chunk(void *ptr_free);
 void				print_alloc_chunk(void *ptr_alloc);
@@ -114,4 +114,3 @@ size_t				ft_flags(size_t size);
 
 void	update_freelist(t_freechunk *prev_free, t_freechunk* current, t_freechunk *next_free);
 #endif
- 

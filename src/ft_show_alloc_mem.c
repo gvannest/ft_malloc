@@ -23,12 +23,12 @@ void	print_info_heap(void *ptr_heap, size_t heap_size)
 
 void	print_free_chunk(void *ptr_free)
 {
-		printf("free chunk : %p\n", ptr_free);
-		printf("header free chunk / prevsize : %lu\n", (((t_freechunk*)(ptr_free))->mchunk_prevsize));
-		printf("header chunk (free) / size with flags : %lu\n", (((t_freechunk*)(ptr_free))->mchunk_size));
-		printf("header chunk (free) / size wo flags : %lu\n", ft_size_wo_flags(((t_freechunk*)(ptr_free))->mchunk_size));
-		printf("header chunk (free) / prev_chunk : %p\n", (((t_freechunk*)(ptr_free))->prev_freechunk));
-		printf("header chunk (free) / next_chunk : %p\n", (((t_freechunk*)(ptr_free))->next_freechunk));
+		ft_printf("free chunk : %p\n", ptr_free);
+		ft_printf("header free chunk / prevsize : %lu\n", (((t_freechunk*)(ptr_free))->mchunk_prevsize));
+		ft_printf("header chunk (free) / size with flags : %lu\n", (((t_freechunk*)(ptr_free))->mchunk_size));
+		ft_printf("header chunk (free) / size wo flags : %lu\n", ft_size_wo_flags(((t_freechunk*)(ptr_free))->mchunk_size));
+		ft_printf("header chunk (free) / prev_chunk : %p\n", (((t_freechunk*)(ptr_free))->prev_freechunk));
+		ft_printf("header chunk (free) / next_chunk : %p\n", (((t_freechunk*)(ptr_free))->next_freechunk));
 }
 
 void	print_alloc_chunk(void *ptr_alloc)

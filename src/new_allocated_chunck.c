@@ -20,6 +20,8 @@ void			create_new_free_chunk(void **begin_free, t_freechunk *selected_chunk, siz
 	t_freechunk		*next;
 	void			*next_block;
 
+	size_t chunk = selected_chunk->mchunk_size;
+
 	free_size = ft_size_wo_flags(selected_chunk->mchunk_size) - (size_user + HDR_SIZE_ALLOC);
 	if (selected_chunk->mchunk_size & F_FLAG)
 	{	
@@ -31,7 +33,7 @@ void			create_new_free_chunk(void **begin_free, t_freechunk *selected_chunk, siz
 	{
 		new_chunk = (void*)selected_chunk + (HDR_SIZE_ALLOC + size_user);
 		prev = ft_prev_free(new_chunk, *begin_free);
-		next = prev ? prev->next_freechunk : NULL;
+		next = prev ? prev->next_freechunk : *begin_free;
 		*new_chunk = ft_set_header_free(size_user + HDR_SIZE_ALLOC, ft_add_flags_to_size(free_size, 1, 0, 0), prev, next);
 		*begin_free = (prev ? *begin_free : new_chunk);
 	}
@@ -40,6 +42,8 @@ void			create_new_free_chunk(void **begin_free, t_freechunk *selected_chunk, siz
 	next_block = (void*)new_chunk + free_size;
 	if (next_block != (current_heap->current_footer))
 		*((t_allocchunk*)next_block) = ft_set_header_alloc(free_size, ((t_allocchunk*)next_block)->mchunk_size | P_FLAG);
+
+	chunk = 0;
 }
 
 
@@ -67,11 +71,23 @@ void			*new_allocated_chunk(void* selected_chunk, size_t size_user, void **begin
 {
 	size_t			chunk_size;
 	t_freechunk		*selected_cast;
-
 	selected_cast = (t_freechunk*)selected_chunk;
+	size_t wo_flags = ft_size_wo_flags(selected_cast->mchunk_size);
+	size_t with_flag = selected_cast->mchunk_size;
+	size_t prev_size = selected_cast->mchunk_prevsize;
+	void * prev = selected_cast->prev_freechunk;
+	void *next = selected_cast->next_freechunk;
+	
+	
 	chunk_size = size_user + HDR_SIZE_ALLOC;
 	if (ft_size_wo_flags(selected_cast->mchunk_size) - chunk_size >= HDR_SIZE_FREE)
 		create_new_free_chunk(begin, selected_cast, size_user, find_current_heap((void*)selected_chunk));
 	ft_chunk_allocation(selected_cast, begin);
 	return (selected_chunk + HDR_SIZE_ALLOC);
+
+	wo_flags = 0;
+	with_flag = 0;
+	prev = NULL;
+	next = NULL;
+	prev_size = 0;
 }

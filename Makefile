@@ -17,7 +17,7 @@ endif
 
 # COMPILATION
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -Wpadded -Weverything
 ADDFLAGS = -g
 SYSFLAG =  -shared
 
