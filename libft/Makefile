@@ -12,7 +12,7 @@
 
 # COMPILATION
 CC = ar
-CFLAGS = -Werror -Wextra -Wall
+CFLAGS = -Werror -Wextra -Wall -g
 
 # DEFAULT RULE
 DEFRULE = all

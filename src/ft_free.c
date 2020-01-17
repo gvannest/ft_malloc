@@ -49,11 +49,12 @@ void			free(void *ptr)
 {
 	// ATTENTION que faire si le pointeur n'existe pass? Que fairet le vrai malloc? a tester
 	// => VERIFIER S IL APPARTIENT A L'UNE DE NOS PAGES
-	size_t	chunk_size;
-	size_t	size_wo_flags;
+	size_t			chunk_size;
+	size_t			size_wo_flags;
+	t_heapheader	*current_heap;
 
-	show_alloc_mem();
-	if (!ptr && !find_current_heap(ptr))
+	current_heap = find_current_heap(ptr);
+	if (!ptr || !((ptr > (void*)current_heap) && (ptr < current_heap->current_footer)))
 		return;
 	ptr = ptr - HDR_SIZE_ALLOC;
 	chunk_size = ((t_allocchunk*)ptr)->mchunk_size;

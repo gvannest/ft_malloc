@@ -52,9 +52,6 @@ size_t		align_large_size(size_t size_user)
 	size_t size_modif;
 
 	size_modif = (size_user & 0xfffffffffffff000);
-	ft_printf("size en binaire : %b\n", size_user);
-	ft_printf("4096 eb binaire : %b\n", 0x1000);
-	ft_printf("size_modif en binaire : %b\n", size_modif);
 	if (size_modif == size_user)
 		return size_user;
 	return (size_modif + 0x1000);
@@ -68,10 +65,13 @@ t_freechunk		*ft_prev_free(void *ptr, void *begin)
 
 	begin_free = (t_freechunk*)begin;
 	prev_chk = NULL;
+	//show_alloc_mem();
+	printf("begin_free %p\n\n", begin_free);
 	while (begin_free && (void*)begin_free < ptr)
 	{
 		prev_chk = begin_free;
 		begin_free = begin_free->next_freechunk;
+		printf("END OF W : begin_free %p\n\n", begin_free);
 	}
 	return prev_chk;
 }
