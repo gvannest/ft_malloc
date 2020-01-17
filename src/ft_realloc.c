@@ -114,7 +114,6 @@ void *realloc(void *ptr, size_t size)
 	char			heap_type;
 	t_heapheader	*current_heap;
 
-	current_heap = find_current_heap(ptr);
 	if (!ptr)
 		return malloc(size);
 	if (ptr && !size)
@@ -122,9 +121,10 @@ void *realloc(void *ptr, size_t size)
 		free(ptr);
 		return NULL;
 	}
+	ptr = ptr - HDR_SIZE_ALLOC;
+	current_heap = find_current_heap(ptr);
 	if(!((ptr > (void*)current_heap) && (ptr < current_heap->current_footer)))
 		return ptr;
-	ptr = ptr - HDR_SIZE_ALLOC;
 	size_aligned = align_size(size);
 	size_wo_flags = ft_size_wo_flags(((t_allocchunk *)ptr)->mchunk_size);
 	if (!ptr || (ptr && ((t_allocchunk*)ptr)->mchunk_size & F_FLAG))
