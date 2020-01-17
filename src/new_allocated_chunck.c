@@ -31,8 +31,9 @@ void			create_new_free_chunk(void **begin_free, t_freechunk *selected_chunk, siz
 	{
 		new_chunk = (void*)selected_chunk + (HDR_SIZE_ALLOC + size_user);
 		prev = ft_prev_free(new_chunk, *begin_free);
-		next = prev ? prev->next_freechunk : *begin_free;
+		next = prev ? prev->next_freechunk : NULL;
 		*new_chunk = ft_set_header_free(size_user + HDR_SIZE_ALLOC, ft_add_flags_to_size(free_size, 1, 0, 0), prev, next);
+		*begin_free = (prev ? *begin_free : new_chunk);
 	}
 	update_freelist(new_chunk->prev_freechunk, new_chunk, new_chunk->next_freechunk);
 	set_size(selected_chunk->mchunk_size - free_size, (void*)selected_chunk);
