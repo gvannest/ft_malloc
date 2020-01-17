@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   headers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gvannest <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gvannest <gvannest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 16:21:16 by gvannest          #+#    #+#             */
-/*   Updated: 2020/01/11 18:13:22 by gvannest         ###   ########.fr       */
+/*   Updated: 2020/01/17 15:09:46 by gvannest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void			set_prev_size(size_t prev_size, void *chunk)
 void			set_size(size_t size, void *chunk)
 {
 	((t_allocchunk*)chunk)->mchunk_size = size;
+
 }
 
 void			set_prev_freechunk(t_freechunk *prev, void *chunk)

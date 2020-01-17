@@ -34,7 +34,7 @@ static void *ft_move_free_header(void *ptr, size_t chunk_size, size_t size_diff)
 	ft_memcpy(free_block + size_diff, free_block, HDR_SIZE_FREE);
 	set_size((current_free_size - size_diff) | flags, free_block + size_diff);
 	set_prev_size(((t_freechunk *)free_block)->mchunk_prevsize + size_diff, free_block + size_diff);
-	return (free_block);
+	return (free_block + size_diff);
 }
 
 static void ft_update_current_size(void *ptr, size_t new_size)
@@ -133,8 +133,8 @@ void *realloc(void *ptr, size_t size)
 		return ft_new_alloc(ptr + HDR_SIZE_ALLOC, size_aligned, size_wo_flags);
 	if (size_aligned <= size_wo_flags)
 		return ft_reduce_chunk(ptr, size_aligned, size_wo_flags, heap_type);
-	if (size_wo_flags - HDR_SIZE_ALLOC >= size_aligned)
-		return (ptr + HDR_SIZE_ALLOC);
+//	if (size_wo_flags - HDR_SIZE_ALLOC >= size_aligned)
+//		return (ptr + HDR_SIZE_ALLOC);
 	next_chunk = ptr + size_wo_flags;
 	if (next_chunk == find_current_heap(ptr)->current_footer)
 		return ft_new_alloc(ptr + HDR_SIZE_ALLOC, size_aligned, size_wo_flags);
