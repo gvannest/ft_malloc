@@ -6,7 +6,7 @@
 /*   By: gvannest <gvannest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/10 10:37:51 by gvannest          #+#    #+#             */
-/*   Updated: 2020/01/17 15:09:48 by gvannest         ###   ########.fr       */
+/*   Updated: 2020/01/17 16:18:22 by gvannest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ void			create_new_free_chunk(void **begin_free, t_freechunk *selected_chunk, siz
 	t_freechunk		*next;
 	void			*next_block;
 
-	size_t test= ft_size_wo_flags(selected_chunk->mchunk_size);
 	free_size = ft_size_wo_flags(selected_chunk->mchunk_size) - (size_user + HDR_SIZE_ALLOC);
 	if (selected_chunk->mchunk_size & F_FLAG)
 	{	
 		new_chunk = (void*)selected_chunk + (HDR_SIZE_FREE - 16) + size_user;
 		*new_chunk = ft_set_header_free(size_user + (HDR_SIZE_FREE - 16), ft_add_flags_to_size(free_size, 1, 0, 1), selected_chunk, selected_chunk->next_freechunk);
+		update_freelist(selected_chunk->prev_freechunk, selected_chunk, new_chunk);
 	}
 	else
 	{
@@ -39,7 +39,6 @@ void			create_new_free_chunk(void **begin_free, t_freechunk *selected_chunk, siz
 	next_block = (void*)new_chunk + free_size;
 	if (next_block != (current_heap->current_footer))
 		*((t_allocchunk*)next_block) = ft_set_header_alloc(free_size, ((t_allocchunk*)next_block)->mchunk_size | P_FLAG);
-test = 0;
 }
 
 
