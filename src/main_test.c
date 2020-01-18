@@ -28,8 +28,10 @@ int		main(void)
 	int		nbr_realloc_free = 0;
 	int		rand_if;
 
-	tab[0] = NULL;
+	while (i < 10000)
+		tab[i++] = NULL;
 	printf("RAND_MAX is : %d\n", RAND_MAX);
+	i = 0;
 	while (i < 50000)
 	{
 		ptr_idx = rand() % 10000;
@@ -38,6 +40,7 @@ int		main(void)
 		{
 			nbr_free += 1;
 			ft_free(tab[ptr_idx]);
+			tab[ptr_idx] = NULL;
 			if (!(rand_if % 10))
 			{
 				nbr_realloc_free += 1;

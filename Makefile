@@ -38,7 +38,7 @@ INC_PATH = ./includes_malloc\
 
 # SOURCES
 SRC_NAME = \
-main_test.c \
+	main_test.c \
     globals.c \
     ft_malloc.c \
 	utils_mmap.c \

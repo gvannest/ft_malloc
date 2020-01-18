@@ -1,8 +1,10 @@
+#include <stdlib.h>
+
 int		main()
 {
 	char *ptr;
 
-	ptr = 0xffffffff;
-	free(ptr);
+	ptr = (char*)0xffffffff;
+	ptr = realloc(ptr, 1000);
 	return (1);
 }

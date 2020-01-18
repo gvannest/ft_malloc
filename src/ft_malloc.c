@@ -17,7 +17,7 @@ static void		ft_set_header_footer_heap(void *ptr_heap, size_t call_size)
 	t_heapfooter	t_footer;
 	t_heapfooter	*prev_footer;
 	t_heapheader	t_header;
-
+printf("ft set header footer heap : DEBUT");
 	t_footer.next_heap_hdr = NULL;
 	t_header.current_footer = ptr_heap + call_size - FTR_HEAP;
 	prev_footer = prev_footer_ptr(ptr_heap);
@@ -28,6 +28,8 @@ static void		ft_set_header_footer_heap(void *ptr_heap, size_t call_size)
 	}
 	*((t_heapfooter*)(ptr_heap + call_size - FTR_HEAP)) = t_footer;
 	*((t_heapheader*)(ptr_heap)) = t_header;
+printf("ft set header footer heap : FIN");
+print_info_heap(ptr_heap, call_size);
 }
 
 static void		*ft_tiny_small(size_t size, size_t call_size, void **begin_free)
@@ -37,6 +39,7 @@ static void		*ft_tiny_small(size_t size, size_t call_size, void **begin_free)
 	ptr = NULL;
 	if (!(*begin_free))
 	{
+printf("ft tiny small 1\n");
 		*begin_free = call_mmap(call_size);
 		ft_first_free_chunk(*begin_free + HDR_HEAP, call_size - FTR_HEAP - HDR_HEAP, NULL);
 		ft_set_header_footer_heap(*begin_free, call_size);
@@ -45,9 +48,13 @@ static void		*ft_tiny_small(size_t size, size_t call_size, void **begin_free)
 		return new_allocated_chunk(*begin_free, size, begin_free);
 	}
 	else if ((ptr = search_free(*begin_free, size)))
+	{
+printf("ft tiny small 2\n");
 		return new_allocated_chunk(ptr, size, begin_free);
+	}
 	else
 	{
+	printf("ft tiny small 3\n");
 		ptr = call_mmap(call_size);
 		ft_first_free_chunk(ptr + HDR_HEAP, call_size - FTR_HEAP - HDR_HEAP, ft_prev_free(ptr + HDR_HEAP, *begin_free));
 		ft_set_header_footer_heap(ptr, call_size);

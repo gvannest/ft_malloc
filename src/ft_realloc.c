@@ -15,9 +15,10 @@
 static void *ft_new_alloc(void *ptr, size_t size, size_t old_size)
 {
 	void *new_ptr;
-
+	printf("FUNCTION : ft_new_alloc\n");
+	print_alloc_chunk(ptr);
 	new_ptr = ft_malloc(size);
-	ft_memcpy(new_ptr, ptr, old_size - HDR_SIZE_ALLOC);
+	ft_memcpy(new_ptr, ptr, old_size);
 	ft_free(ptr);
 	return new_ptr;
 }
@@ -63,9 +64,11 @@ static void *ft_next_chunk_free(void *ptr, t_freechunk *next_chunk, size_t size_
 
 	next_size_wo_flags = ft_size_wo_flags(next_chunk->mchunk_size);
 	size_diff = size_user - (size_wo_flags - HDR_SIZE_ALLOC);
-	if ((int)next_size_wo_flags - (int)size_diff >= 0)
+printf("next new chuck free \n size user = %lu  - (size wo flags = %lu + HDR SIZE ALLOC\n", size_user, size_wo_flags);
+printf("size diff = %lu\n", size_diff);
+	if (next_size_wo_flags >= size_diff)
 	{
-		if ((int)next_size_wo_flags - (int)size_diff < HDR_SIZE_FREE)
+		if (next_size_wo_flags < size_diff + HDR_SIZE_FREE)
 		{
 			ft_del_free_list(next_chunk);
 			ft_update_current_size(ptr, size_wo_flags + next_size_wo_flags);
@@ -80,7 +83,7 @@ static void *ft_next_chunk_free(void *ptr, t_freechunk *next_chunk, size_t size_
 		}
 		return (ptr + HDR_SIZE_ALLOC);
 	}
-	return (ft_new_alloc(ptr + HDR_SIZE_ALLOC, size_user, size_wo_flags));
+	return (ft_new_alloc(ptr + HDR_SIZE_ALLOC, size_user, size_wo_flags - HDR_SIZE_ALLOC));
 }
 
 static char ft_is_same_heap_size(size_t size_chunk, size_t size_user)
@@ -123,7 +126,10 @@ void *ft_realloc(void *ptr, size_t size)
 		ft_free(ptr);
 		return NULL;
 	}
+printf("PTR = %p\n", ptr);
 	ptr = ptr - HDR_SIZE_ALLOC;
+	printf("FUNCTION : ft_realloc, pontier sent:\n");
+	print_alloc_chunk(ptr);
 	current_heap = find_current_heap(ptr);
 	if(!current_heap || !((ptr > (void*)current_heap) && (ptr < current_heap->current_footer)))
 		return (ptr + HDR_SIZE_ALLOC);
@@ -132,13 +138,13 @@ void *ft_realloc(void *ptr, size_t size)
 	if (!ptr || (ptr && ((t_allocchunk*)ptr)->mchunk_size & F_FLAG))
 		return NULL;
 	if (!(heap_type = ft_is_same_heap_size(size_wo_flags, size_aligned)))
-		return ft_new_alloc(ptr + HDR_SIZE_ALLOC, size_aligned, size_wo_flags);
+		return ft_new_alloc(ptr + HDR_SIZE_ALLOC, size_aligned, size_wo_flags - HDR_SIZE_ALLOC);
 	if (size_aligned <= size_wo_flags)
 		return ft_reduce_chunk(ptr, size_aligned + HDR_SIZE_ALLOC, size_wo_flags, heap_type);
 	next_chunk = ptr + size_wo_flags;
 	if (next_chunk == find_current_heap(ptr)->current_footer)
-		return ft_new_alloc(ptr + HDR_SIZE_ALLOC, size_aligned, size_wo_flags);
+		return ft_new_alloc(ptr + HDR_SIZE_ALLOC, size_aligned, size_wo_flags - HDR_SIZE_ALLOC);
 	if (!(next_chunk->mchunk_size & F_FLAG))
-		return ft_new_alloc(ptr + HDR_SIZE_ALLOC, size_aligned, size_wo_flags);
+		return ft_new_alloc(ptr + HDR_SIZE_ALLOC, size_aligned, size_wo_flags - HDR_SIZE_ALLOC);
 	return ft_next_chunk_free(ptr, (t_freechunk *)next_chunk, size_aligned, size_wo_flags);
 }
