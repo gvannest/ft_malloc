@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_test.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gvannest <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gvannest <gvannest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 17:14:41 by gvannest          #+#    #+#             */
-/*   Updated: 2020/01/11 16:19:35 by gvannest         ###   ########.fr       */
+/*   Updated: 2020/01/18 10:14:58 by gvannest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,53 +17,57 @@
 
 int		main(void)
 {
-	char *ptr1;
-	char *ptr2;
-	char *ptr3;
-	//char *ptr4;
-	//char *ptr5;
 
-	ptr1 = 0;
-	ptr2 = 0;
-	ptr3 = 0;
+	srand(time(NULL));
+	char *tab[10000];
+	int i = 0;
+	int	ptr_idx = 0;
+	int		nbr_free = 0;
+	int		nbr_malloc = 0;
+	int		nbr_realloc = 0;
+	int		nbr_realloc_free = 0;
+	int		rand_if;
 
-	ptr1 = (char*)malloc(512);
-	ptr1[0] = 'y';
-	ptr1[1] = 'y';
-	ptr1[2] = 'y';
-	ptr1[3] = 'y';
-	ptr1[4] = 'y';
-	ptr1[511] = 'z';
-	ptr2 = malloc(800);
-	ptr3 = malloc(800);
-	free(ptr2);
-	show_alloc_mem();
-	realloc(ptr1, 400);
-	show_alloc_mem();
+	tab[0] = NULL;
+	printf("RAND_MAX is : %d\n", RAND_MAX);
+	while (i < 50000)
+	{
+		ptr_idx = rand() % 10000;
+		rand_if = rand() % 10000;
+		if (!(rand_if % 7))
+		{
+			nbr_free += 1;
+			ft_free(tab[ptr_idx]);
+			if (!(rand_if % 14))
+			{
+				nbr_realloc_free += 1;
+				tab[ptr_idx] = ft_realloc(tab[ptr_idx], rand() % 10000);
+			}
+		}
+		else if (!(rand_if % 5))
+		{
+			nbr_realloc += 1;
+			tab[ptr_idx] = ft_realloc(tab[ptr_idx], rand() % 10000);
+		}
+		else
+		{
+			nbr_malloc += 1;
+			tab[ptr_idx] = ft_malloc(rand() % 10000);
+		}
+		i += 1;
+	}
+	printf("RESULTS -------------------------------\n");
+	printf("Number of malloc : %d\n", nbr_malloc);
+	printf("Number of free : %d\n", nbr_free);
+	printf("Number of realloc wo free : %d\n", nbr_realloc);
+	printf("Number of realloc with free before : %d\n", nbr_realloc_free);
+	return (0);
+}
 
 
-//	ptr = malloc(512);
-//	ptr5 = malloc(13300);
-//	ptr2 = malloc(5780);
-//	ptr1 = malloc(512);
-//	ptr3 = malloc(2845);
-//	ptr4 = malloc(27800);
-/*	printf("ptr %p\n", ptr);
-	ptr[0] = 'y';
-	ptr[1] = 'o';
-	ptr[2] = 'l';
-	ptr[3] = '0';
-	printf("coucou %s\n", ptr);
-	show_alloc_mem();
-	free(ptr1);
-	free(ptr);
-	free(ptr2);
-	free(ptr3);
-	free(ptr4);
-	free(ptr5);
-	show_alloc_mem();
 
 
+/*
 	srand(time(NULL));
 	size_t i = 1;
 	char a = 0, m = 0, p = 0;
@@ -110,7 +114,7 @@ int		main(void)
 
 		i++;
 	}
-*/
 	return (0);
 }
+*/
 

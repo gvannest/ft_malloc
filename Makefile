@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gvannest <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: gvannest <gvannest@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/03 14:13:27 by gvannest          #+#    #+#              #
-#    Updated: 2020/01/10 11:41:18 by gvannest         ###   ########.fr        #
+#    Updated: 2020/01/18 09:40:00 by gvannest         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,14 +17,15 @@ endif
 
 # COMPILATION
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -Wpadded -Weverything
+CFLAGS = -Wall -Wextra -Werror #-Wpadded -Weverything
 ADDFLAGS = -g
-SYSFLAG =  -shared
+SYSFLAG =  #-shared
 
 # DEFAULT RULE
 DEFRULE = all
 
 # BINARY
+NAME_2 = malloc_exec
 NAME = libft_malloc_${HOSTTYPE}.so
 SYMLINK = libft_malloc.so
 
@@ -37,6 +38,7 @@ INC_PATH = ./includes_malloc\
 
 # SOURCES
 SRC_NAME = \
+main_test.c \
     globals.c \
     ft_malloc.c \
 	utils_mmap.c \
@@ -90,16 +92,16 @@ default:
 	@make $(DEFRULE)
 
 .PHONY: all
-all: libftcomp $(OBJ_PATH) $(NAME) Makefile
+all: libftcomp $(OBJ_PATH) $(NAME_2) Makefile
 
 libftcomp:
 	@make all -C $(LIBFT_PATH)
 
-$(NAME): $(OBJ)
-	@echo -e "--$(LOG_CLEAR)$(LOG_MAGENTA)$(NAME)$(LOG_NOCOLOR)....................... $(LOG_ORANGE)assembling$(LOG_NOCOLOR)$(LOG_UP)"
+$(NAME_2): $(OBJ)
+	@echo -e "--$(LOG_CLEAR)$(LOG_MAGENTA)$(NAME_2)$(LOG_NOCOLOR)....................... $(LOG_ORANGE)assembling$(LOG_NOCOLOR)$(LOG_UP)"
 	@$(CC) $(CFLAGS) $(SYSFLAG) $(ADD_FLAGS) $(LIBFT) $(OBJ) -o $@
-	@echo -e "--$(LOG_CLEAR)$(LOG_CYAN)$(NAME)$(LOG_NOCOLOR) compiled................. $(LOG_GREEN)✓$(LOG_NOCOLOR)"
-	ln -fs $(NAME) $(SYMLINK)
+	@echo -e "--$(LOG_CLEAR)$(LOG_CYAN)$(NAME_2)$(LOG_NOCOLOR) compiled................. $(LOG_GREEN)✓$(LOG_NOCOLOR)"
+	#ln -fs $(NAME) $(SYMLINK)
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@$(CC) $(CFLAGS) $(CPPFLAGS) $(ADDFLAGS) -c -o $@ $<
@@ -108,21 +110,21 @@ $(OBJ_PATH_CH)%.o: $(SRC_PATH_CH)%.c
 	@$(CC) $(CFLAGS) $(CPPFLAGS) $(ADDFLAGS) -c -o $@ $<
 
 $(OBJ_PATH):
-	@echo -e "$(LOG_CLEAR)$(LOG_BLUE)build $(NAME)$(LOG_NOCOLOR)"
+	@echo -e "$(LOG_CLEAR)$(LOG_BLUE)build $(NAME_2)$(LOG_NOCOLOR)"
 	@mkdir -p $(OBJ_PATH)
 
 .PHONY: clean
 clean:
-	@echo -e "$(LOG_CLEAR)$(LOG_BLUE)clean $(NAME)$(LOG_NOCOLOR)"
+	@echo -e "$(LOG_CLEAR)$(LOG_BLUE)clean $(NAME_2)$(LOG_NOCOLOR)"
 	@echo -e "--$(LOG_CLEAR)$(LOG_YELLOW)Objects$(LOG_NOCOLOR) deleted.............. $(LOG_RED)×$(LOG_NOCOLOR)"
 	@rm -rf $(OBJ_PATH)
 	@make clean -C $(LIBFT_PATH)
 
 .PHONY: fclean
 fclean: clean
-	@echo -e "$(LOG_CLEAR)$(LOG_BLUE)fclean $(NAME)$(LOG_NOCOLOR)"
+	@echo -e "$(LOG_CLEAR)$(LOG_BLUE)fclean $(NAME_2)$(LOG_NOCOLOR)"
 	@make fclean -C $(LIBFT_PATH)
-	@rm -f $(NAME)
+	@rm -f $(NAME_2)
 	@rm -f $(SYMLINK)
 
 .PHONY: re

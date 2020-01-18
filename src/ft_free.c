@@ -45,7 +45,7 @@ static	int		free_large(void *ptr, size_t size_wo_flags)
 	return munmap(ptr, size_wo_flags + HDR_HEAP + FTR_HEAP);
 }
 
-void			free(void *ptr)
+void			ft_free(void *ptr)
 {
 	// ATTENTION que faire si le pointeur n'existe pass? Que fairet le vrai malloc? a tester
 	// => VERIFIER S IL APPARTIENT A L'UNE DE NOS PAGES

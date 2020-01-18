@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_malloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gvannest <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gvannest <gvannest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 17:21:19 by gvannest          #+#    #+#             */
-/*   Updated: 2020/01/11 16:19:00 by gvannest         ###   ########.fr       */
+/*   Updated: 2020/01/18 10:15:02 by gvannest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static void		*ft_large(size_t size)
 }
 
 
-void			*malloc(size_t size)
+void			*ft_malloc(size_t size)
 {
 	size = align_size(size);
 	if (size < TINY_MAX_SIZE)
