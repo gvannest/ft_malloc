@@ -98,12 +98,13 @@ static void	*ft_reduce_chunk(void *ptr, size_t size_user, size_t size_wo_flags, 
 	size_t	size_diff;
 	void	**begin_free;
 	
-	size_diff = size_wo_flags - size_user;
+	printf("FUNCTION : ft_reduce_chunk\n");
+	size_diff = size_wo_flags - (size_user + HDR_SIZE_ALLOC);
 	begin_free = heap_type == 1 ? &(g_ptr.tiny_free_begin) : &(g_ptr.small_free_begin); 
-	if (size_user == size_wo_flags || size_diff < HDR_SIZE_FREE)
-		return ptr;
+	if (size_user + HDR_SIZE_ALLOC == size_wo_flags || size_diff < HDR_SIZE_FREE)
+		return (ptr + HDR_SIZE_ALLOC);
 	create_new_free_chunk(begin_free, ptr, size_user, find_current_heap(ptr));
-	return (ptr);
+	return (ptr + HDR_SIZE_ALLOC);
 }
 
 void *ft_realloc(void *ptr, size_t size)
@@ -114,6 +115,7 @@ void *ft_realloc(void *ptr, size_t size)
 	char			heap_type;
 	t_heapheader	*current_heap;
 
+	printf("\nREALLOC\n");
 	if (!ptr)
 		return ft_malloc(size);
 	if (ptr && !size)
@@ -123,8 +125,8 @@ void *ft_realloc(void *ptr, size_t size)
 	}
 	ptr = ptr - HDR_SIZE_ALLOC;
 	current_heap = find_current_heap(ptr);
-	if(!((ptr > (void*)current_heap) && (ptr < current_heap->current_footer)))
-		return ptr;
+	if(!current_heap || !((ptr > (void*)current_heap) && (ptr < current_heap->current_footer)))
+		return (ptr + HDR_SIZE_ALLOC);
 	size_aligned = align_size(size);
 	size_wo_flags = ft_size_wo_flags(((t_allocchunk *)ptr)->mchunk_size);
 	if (!ptr || (ptr && ((t_allocchunk*)ptr)->mchunk_size & F_FLAG))
@@ -133,8 +135,6 @@ void *ft_realloc(void *ptr, size_t size)
 		return ft_new_alloc(ptr + HDR_SIZE_ALLOC, size_aligned, size_wo_flags);
 	if (size_aligned <= size_wo_flags)
 		return ft_reduce_chunk(ptr, size_aligned, size_wo_flags, heap_type);
-//	if (size_wo_flags - HDR_SIZE_ALLOC >= size_aligned)
-//		return (ptr + HDR_SIZE_ALLOC);
 	next_chunk = ptr + size_wo_flags;
 	if (next_chunk == find_current_heap(ptr)->current_footer)
 		return ft_new_alloc(ptr + HDR_SIZE_ALLOC, size_aligned, size_wo_flags);

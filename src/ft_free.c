@@ -53,10 +53,13 @@ void			ft_free(void *ptr)
 	size_t			size_wo_flags;
 	t_heapheader	*current_heap;
 
-	current_heap = find_current_heap(ptr);
-	if (!ptr || !((ptr > (void*)current_heap) && (ptr < current_heap->current_footer)))
+	printf("\nFREE\n");
+	if (!ptr)
 		return;
 	ptr = ptr - HDR_SIZE_ALLOC;
+	current_heap = find_current_heap(ptr);
+	if (!current_heap || !((ptr > (void*)current_heap) && (ptr < current_heap->current_footer)))
+		return;
 	chunk_size = ((t_allocchunk*)ptr)->mchunk_size;
 	size_wo_flags = ft_size_wo_flags(chunk_size);
 	if (!size_wo_flags) //a voir ce qu'on fait peut etre virer le header

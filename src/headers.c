@@ -6,7 +6,7 @@
 /*   By: gvannest <gvannest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 16:21:16 by gvannest          #+#    #+#             */
-/*   Updated: 2020/01/17 15:09:46 by gvannest         ###   ########.fr       */
+/*   Updated: 2020/01/18 12:07:06 by gvannest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ t_freechunk		ft_set_header_free(size_t prev_size, size_t chunk_size, t_freechunk
 	
 	set_prev_size(prev_size, (void*)&t_free);
 	set_size(chunk_size, (void*)&t_free);
-	set_prev_freechunk(prev_chunk, &t_free);
-	set_next_freechunk(next_chunk, &t_free);
+	set_prev_freechunk(prev_chunk, (void*)&t_free);
+	set_next_freechunk(next_chunk, (void*)&t_free);
 
 	return t_free;
 }

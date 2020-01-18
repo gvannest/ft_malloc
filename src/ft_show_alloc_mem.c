@@ -6,7 +6,7 @@
 /*   By: gvannest <gvannest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 17:16:47 by gvannest          #+#    #+#             */
-/*   Updated: 2020/01/17 15:09:49 by gvannest         ###   ########.fr       */
+/*   Updated: 2020/01/18 11:05:58 by gvannest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	print_info_heap(void *ptr_heap, size_t heap_size)
 {
 		printf("begin heap : %p\n", g_ptr.begin_heap);
 		printf("begin current heap : %p\n", ptr_heap);
-		printf("header heap : %p\n", ((t_heapheader*)ptr_heap)->current_footer);
+		printf("footer address in header heap : %p\n", ((t_heapheader*)ptr_heap)->current_footer);
 		printf("Heap size = %lu\n", heap_size);
 		printf("footer-> next heap hdr : %p\n", ((t_heapfooter*)((t_heapheader*)ptr_heap)->current_footer)->next_heap_hdr);
 }

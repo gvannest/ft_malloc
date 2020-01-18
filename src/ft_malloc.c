@@ -6,7 +6,7 @@
 /*   By: gvannest <gvannest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 17:21:19 by gvannest          #+#    #+#             */
-/*   Updated: 2020/01/18 10:15:02 by gvannest         ###   ########.fr       */
+/*   Updated: 2020/01/18 11:55:29 by gvannest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,20 @@ static void		*ft_large(size_t size)
 void			*ft_malloc(size_t size)
 {
 	size = align_size(size);
+	printf("\nMALLOC\n");
 	if (size < TINY_MAX_SIZE)
+	{
+		printf("MALLOC : tiny\n");
 		return (ft_tiny_small(size, getpagesize() * TINY_PAGES, &(g_ptr.tiny_free_begin)));
+	}
 	else if (size < SMALL_MAX_SIZE)
+	{
+		printf("MALLOC : small\n");
 		return (ft_tiny_small(size, getpagesize() * SMALL_PAGES, &(g_ptr.small_free_begin)));
+	}
 	else
+	{
+		printf("MALLOC : large\n");
 		return (ft_large(size));
+	}
 }

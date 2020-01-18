@@ -6,7 +6,7 @@
 /*   By: gvannest <gvannest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 17:14:41 by gvannest          #+#    #+#             */
-/*   Updated: 2020/01/18 10:14:58 by gvannest         ###   ########.fr       */
+/*   Updated: 2020/01/18 10:53:52 by gvannest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,17 @@ int		main(void)
 	{
 		ptr_idx = rand() % 10000;
 		rand_if = rand() % 10000;
-		if (!(rand_if % 7))
+		if (!(rand_if % 5))
 		{
 			nbr_free += 1;
 			ft_free(tab[ptr_idx]);
-			if (!(rand_if % 14))
+			if (!(rand_if % 10))
 			{
 				nbr_realloc_free += 1;
 				tab[ptr_idx] = ft_realloc(tab[ptr_idx], rand() % 10000);
 			}
 		}
-		else if (!(rand_if % 5))
+		else if (!(rand_if % 7))
 		{
 			nbr_realloc += 1;
 			tab[ptr_idx] = ft_realloc(tab[ptr_idx], rand() % 10000);
