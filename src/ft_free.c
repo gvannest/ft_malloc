@@ -47,13 +47,10 @@ static	int		free_large(void *ptr, size_t size_wo_flags)
 
 void			ft_free(void *ptr)
 {
-	// ATTENTION que faire si le pointeur n'existe pass? Que fairet le vrai malloc? a tester
-	// => VERIFIER S IL APPARTIENT A L'UNE DE NOS PAGES
 	size_t			chunk_size;
 	size_t			size_wo_flags;
 	t_heapheader	*current_heap;
 
-	printf("\nFREE\n");
 	if (!ptr)
 		return;
 	ptr = ptr - HDR_SIZE_ALLOC;

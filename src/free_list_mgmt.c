@@ -80,9 +80,6 @@ void			ft_change_header_to_free(void *ptr, void **begin_free)
 
 void	update_freelist(t_freechunk *prev_free, t_freechunk* current, t_freechunk *next_free)
 {
-	printf("GEETING IN update_free_list:\n");
-	printf("Values:\n");
-	printf("prev_free : %p\ncurrent : %p\nnext_free : %p\n\n", prev_free, current, next_free);
 	if (prev_free)
 		prev_free->next_freechunk = (current ? current : next_free);
 	if (current)
@@ -92,5 +89,4 @@ void	update_freelist(t_freechunk *prev_free, t_freechunk* current, t_freechunk *
 	}
 	if (next_free)
 		next_free->prev_freechunk = (current ? current : prev_free);
-	printf("GEETING OUT OUT OUT update_free_list:\n");
 }

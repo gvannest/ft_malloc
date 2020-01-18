@@ -6,7 +6,7 @@
 /*   By: gvannest <gvannest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 17:14:41 by gvannest          #+#    #+#             */
-/*   Updated: 2020/01/18 10:53:52 by gvannest         ###   ########.fr       */
+/*   Updated: 2020/01/18 19:29:33 by gvannest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include <stdio.h>
 #include <time.h>
 #include <math.h>
+	
+#include <unistd.h>
 
 int		main(void)
 {
@@ -28,37 +30,42 @@ int		main(void)
 	int		nbr_realloc_free = 0;
 	int		rand_if;
 
-	while (i < 10000)
-		tab[i++] = NULL;
+	while (i < 1000)
+	{
+		tab[i] = NULL;
+		i++;
+	}
 	printf("RAND_MAX is : %d\n", RAND_MAX);
 	i = 0;
-	while (i < 50000)
+	while (i < 20000)
 	{
 		ptr_idx = rand() % 10000;
 		rand_if = rand() % 10000;
-		if (!(rand_if % 5))
+		if (!(rand_if % 3))
 		{
 			nbr_free += 1;
 			ft_free(tab[ptr_idx]);
 			tab[ptr_idx] = NULL;
-			if (!(rand_if % 10))
+			if (!(rand_if % 9))
 			{
 				nbr_realloc_free += 1;
-				tab[ptr_idx] = ft_realloc(tab[ptr_idx], rand() % 10000);
+				tab[ptr_idx] = ft_realloc(tab[ptr_idx], rand() % 7000);
 			}
 		}
-		else if (!(rand_if % 7))
+		else if (!(rand_if % 4))
 		{
 			nbr_realloc += 1;
-			tab[ptr_idx] = ft_realloc(tab[ptr_idx], rand() % 10000);
+			tab[ptr_idx] = ft_realloc(tab[ptr_idx], rand() % 7000);
 		}
 		else
 		{
 			nbr_malloc += 1;
-			tab[ptr_idx] = ft_malloc(rand() % 10000);
+			tab[ptr_idx] = ft_malloc(rand() % 7000);
+
 		}
 		i += 1;
 	}
+	show_alloc_mem();
 	printf("RESULTS -------------------------------\n");
 	printf("Number of malloc : %d\n", nbr_malloc);
 	printf("Number of free : %d\n", nbr_free);

@@ -6,7 +6,7 @@
 #    By: gvannest <gvannest@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/03 14:13:27 by gvannest          #+#    #+#              #
-#    Updated: 2020/01/18 09:40:00 by gvannest         ###   ########.fr        #
+#    Updated: 2020/01/18 17:45:37 by gvannest         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ endif
 
 # COMPILATION
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror #-Wpadded -Weverything
+CFLAGS = #-Wall #-Wextra #-Werror #-Wpadded -Weverything
 ADDFLAGS = -g
 SYSFLAG =  #-shared
 

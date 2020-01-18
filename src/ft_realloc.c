@@ -15,8 +15,8 @@
 static void *ft_new_alloc(void *ptr, size_t size, size_t old_size)
 {
 	void *new_ptr;
-	printf("FUNCTION : ft_new_alloc\n");
-	print_alloc_chunk(ptr);
+
+	old_size = old_size > size ? size : old_size;
 	new_ptr = ft_malloc(size);
 	ft_memcpy(new_ptr, ptr, old_size);
 	ft_free(ptr);
@@ -28,13 +28,16 @@ static void *ft_move_free_header(void *ptr, size_t chunk_size, size_t size_diff)
 	size_t flags;
 	size_t current_free_size;
 	void *free_block;
+	t_freechunk	free_tmp;
 
 	free_block = ptr + chunk_size;
 	current_free_size = ft_size_wo_flags(((t_freechunk *)free_block)->mchunk_size);
 	flags = ft_flags(((t_freechunk *)free_block)->mchunk_size);
-	ft_memcpy(free_block + size_diff, free_block, HDR_SIZE_FREE);
+	free_tmp = *((t_freechunk*)free_block);
+	*((t_freechunk*)(free_block + size_diff)) = free_tmp;
 	set_size((current_free_size - size_diff) | flags, free_block + size_diff);
 	set_prev_size(((t_freechunk *)free_block)->mchunk_prevsize + size_diff, free_block + size_diff);
+
 	return (free_block + size_diff);
 }
 
@@ -64,8 +67,6 @@ static void *ft_next_chunk_free(void *ptr, t_freechunk *next_chunk, size_t size_
 
 	next_size_wo_flags = ft_size_wo_flags(next_chunk->mchunk_size);
 	size_diff = size_user - (size_wo_flags - HDR_SIZE_ALLOC);
-printf("next new chuck free \n size user = %lu  - (size wo flags = %lu + HDR SIZE ALLOC\n", size_user, size_wo_flags);
-printf("size diff = %lu\n", size_diff);
 	if (next_size_wo_flags >= size_diff)
 	{
 		if (next_size_wo_flags < size_diff + HDR_SIZE_FREE)
@@ -101,7 +102,6 @@ static void	*ft_reduce_chunk(void *ptr, size_t chunk_size, size_t size_wo_flags,
 	size_t	size_diff;
 	void	**begin_free;
 	
-	printf("FUNCTION : ft_reduce_chunk\n");
 	size_diff = size_wo_flags - chunk_size;
 	begin_free = heap_type == 1 ? &(g_ptr.tiny_free_begin) : &(g_ptr.small_free_begin); 
 	if (chunk_size == size_wo_flags || size_diff < HDR_SIZE_FREE)
@@ -118,7 +118,6 @@ void *ft_realloc(void *ptr, size_t size)
 	char			heap_type;
 	t_heapheader	*current_heap;
 
-	printf("\nREALLOC\n");
 	if (!ptr)
 		return ft_malloc(size);
 	if (ptr && !size)
@@ -126,14 +125,12 @@ void *ft_realloc(void *ptr, size_t size)
 		ft_free(ptr);
 		return NULL;
 	}
-printf("PTR = %p\n", ptr);
 	ptr = ptr - HDR_SIZE_ALLOC;
-	printf("FUNCTION : ft_realloc, pontier sent:\n");
-	print_alloc_chunk(ptr);
 	current_heap = find_current_heap(ptr);
 	if(!current_heap || !((ptr > (void*)current_heap) && (ptr < current_heap->current_footer)))
 		return (ptr + HDR_SIZE_ALLOC);
 	size_aligned = align_size(size);
+	size_aligned = (size_aligned < HDR_SIZE_FREE - HDR_SIZE_ALLOC ? HDR_SIZE_FREE - HDR_SIZE_ALLOC : size_aligned);
 	size_wo_flags = ft_size_wo_flags(((t_allocchunk *)ptr)->mchunk_size);
 	if (!ptr || (ptr && ((t_allocchunk*)ptr)->mchunk_size & F_FLAG))
 		return NULL;
