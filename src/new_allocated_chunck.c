@@ -38,7 +38,7 @@ void			create_new_free_chunk(void **begin_free, t_freechunk *selected_chunk, siz
 	update_freelist(new_chunk->prev_freechunk, new_chunk, new_chunk->next_freechunk);
 	set_size(selected_chunk->mchunk_size - free_size, (void*)selected_chunk);
 	next_block = (void*)new_chunk + free_size;
-	if (next_block != (current_heap->current_footer))
+	if (next_block < current_heap->current_footer)
 		*((t_allocchunk*)next_block) = ft_set_header_alloc(free_size, ((t_allocchunk*)next_block)->mchunk_size | P_FLAG);
 
 }
