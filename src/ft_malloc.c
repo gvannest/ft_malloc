@@ -62,12 +62,12 @@ static void		*ft_large(size_t size)
 	size_t	call_size;
 
 	ptr = NULL;
-	call_size = align_large_size(size + HDR_HEAP + FTR_HEAP + HDR_SIZE_ALLOC);
+	call_size = align_large_size(size + HDR_HEAP + FTR_HEAP + HDR_SIZE_FREE);
 	ptr = call_mmap(call_size);
 	ft_large_allocation(ptr + HDR_HEAP, call_size);
 	ft_set_header_footer_heap(ptr, call_size);
 	(!g_ptr.begin_heap) ? g_ptr.begin_heap = ptr : 0;
-	return (ptr + HDR_SIZE_ALLOC + HDR_HEAP);
+	return (ptr + HDR_SIZE_FREE + HDR_HEAP);
 }
 
 

@@ -14,9 +14,8 @@
 
 void	ft_large_allocation(void *ptr, size_t size)
 {
-	t_allocchunk new_large_chunk;
-
-	new_large_chunk.mchunk_prevsize = 0;
-	new_large_chunk.mchunk_size = ft_add_flags_to_size(size - HDR_HEAP - FTR_HEAP, 0, 1, 0);
-	*((t_allocchunk*)ptr) = new_large_chunk;
+	((t_freechunk*)ptr)->mchunk_prevsize = 0;
+	((t_freechunk*)ptr)->mchunk_size = ft_add_flags_to_size(size - HDR_HEAP - FTR_HEAP, 0, 1, 0);
+	((t_freechunk*)ptr)->prev_freechunk = NULL;
+	((t_freechunk*)ptr)->next_freechunk = NULL;
 }
