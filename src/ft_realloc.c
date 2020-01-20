@@ -49,7 +49,7 @@ static void ft_update_current_size(void *ptr, size_t new_size)
 static void ft_update_chunk_after_free(void *prev_ptr, size_t new_size, char prev_is_free, t_heapheader *current_heap)
 {
 	size_t size;
-	
+
 	if (prev_ptr + new_size >= current_heap->current_footer)
 		return;
 	size = ((t_allocchunk *)(prev_ptr + new_size))->mchunk_size;
@@ -99,16 +99,16 @@ static char ft_is_same_heap_size(size_t size_chunk, size_t size_user)
 }
 
 
-static void	*ft_reduce_chunk(void *ptr, size_t chunk_size, size_t size_wo_flags, char heap_type)
+static void	*ft_reduce_chunk(void *ptr, size_t new_chunk_size, size_t actual_size, char heap_type)
 {
-	size_t	size_diff;
+	size_t	size_reduction;
 	void	**begin_free;
 	
-	size_diff = size_wo_flags - chunk_size;
+	size_reduction = actual_size - new_chunk_size;
 	begin_free = heap_type == 1 ? &(g_ptr.tiny_free_begin) : &(g_ptr.small_free_begin); 
-	if (chunk_size == size_wo_flags || size_diff < HDR_SIZE_FREE)
+	if (new_chunk_size == actual_size || size_reduction < HDR_SIZE_FREE)
 		return (ptr + HDR_SIZE_ALLOC);
-	create_new_free_chunk(begin_free, ptr, chunk_size, find_current_heap(ptr));
+	create_new_free_chunk(begin_free, ptr, new_chunk_size, find_current_heap(ptr));
 	return (ptr + HDR_SIZE_ALLOC);
 }
 
@@ -138,16 +138,12 @@ void *ft_realloc(void *ptr, size_t size)
 		return NULL;
 	if (!(heap_type = ft_is_same_heap_size(size_wo_flags, size_aligned)))
 		return ft_new_alloc(ptr + HDR_SIZE_ALLOC, size_aligned, size_wo_flags - HDR_SIZE_ALLOC);
-
-	if (size_aligned <= size_wo_flags)
-		// return ft_reduce_chunk(ptr, size_aligned + HDR_SIZE_ALLOC, size_wo_flags, heap_type);
-		return ft_new_alloc(ptr + HDR_SIZE_ALLOC, size_aligned, size_wo_flags - HDR_SIZE_ALLOC);
-	
+	if (size_aligned + HDR_SIZE_ALLOC <= size_wo_flags)
+		return ft_reduce_chunk(ptr, size_aligned + HDR_SIZE_ALLOC, size_wo_flags, heap_type);
 	next_chunk = ptr + size_wo_flags;
 	if (!(current_heap->current_footer) || current_heap->current_footer < (void*)next_chunk)
 		return ft_new_alloc(ptr + HDR_SIZE_ALLOC, size_aligned, size_wo_flags - HDR_SIZE_ALLOC);
 	if (!(next_chunk->mchunk_size & F_FLAG))
 		return ft_new_alloc(ptr + HDR_SIZE_ALLOC, size_aligned, size_wo_flags - HDR_SIZE_ALLOC);
-
 	return ft_next_chunk_free(ptr, (t_freechunk *)next_chunk, size_aligned, size_wo_flags, current_heap);
 }
