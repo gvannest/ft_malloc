@@ -60,12 +60,12 @@ int		main(void)
 		else
 		{
 			nbr_malloc += 1;
-			tab[ptr_idx] = ft_malloc(rand() % 10000);
+			tab[ptr_idx] = ft_malloc(rand() % 50000);
 
 		}
 		i += 1;
 	}
-	//show_alloc_mem();
+	show_alloc_mem();
 	printf("RESULTS -------------------------------\n");
 	printf("Number of malloc : %d\n", nbr_malloc);
 	printf("Number of free : %d\n", nbr_free);
