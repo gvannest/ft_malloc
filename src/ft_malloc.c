@@ -62,19 +62,18 @@ static void		*ft_large(size_t size)
 	size_t	call_size;
 
 	ptr = NULL;
-	call_size = align_large_size(size + HDR_HEAP + FTR_HEAP + HDR_SIZE_FREE);
+	call_size = align_large_size(size + HDR_HEAP + FTR_HEAP + HDR_SIZE);
 	ptr = call_mmap(call_size);
 	ft_large_allocation(ptr + HDR_HEAP, call_size);
 	ft_set_header_footer_heap(ptr, call_size);
 	(!g_ptr.begin_heap) ? g_ptr.begin_heap = ptr : 0;
-	return (ptr + HDR_SIZE_FREE + HDR_HEAP);
+	return (ptr + HDR_SIZE + HDR_HEAP);
 }
 
 
 void			*ft_malloc(size_t size)
 {
 	size = align_size(size);
-	size = (size < HDR_SIZE_FREE - HDR_SIZE_ALLOC ? HDR_SIZE_FREE - HDR_SIZE_ALLOC : size);
 	if (size < TINY_MAX_SIZE)
 		return (ft_tiny_small(size, getpagesize() * TINY_PAGES, &(g_ptr.tiny_free_begin)));
 	else if (size < SMALL_MAX_SIZE)

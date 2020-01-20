@@ -30,14 +30,14 @@ int		main(void)
 	int		nbr_realloc_free = 0;
 	int		rand_if;
 
-	while (i < 1000)
+	while (i < 10000)
 	{
 		tab[i] = NULL;
 		i++;
 	}
 	printf("RAND_MAX is : %d\n", RAND_MAX);
 	i = 0;
-	while (i < 20000)
+	while (i < 50000)
 	{
 		ptr_idx = rand() % 10000;
 		rand_if = rand() % 10000;
@@ -49,23 +49,23 @@ int		main(void)
 			if (!(rand_if % 9))
 			{
 				nbr_realloc_free += 1;
-				tab[ptr_idx] = ft_realloc(tab[ptr_idx], rand() % 7000);
+				tab[ptr_idx] = ft_realloc(tab[ptr_idx], rand() % 50000);
 			}
 		}
 		else if (!(rand_if % 4))
 		{
 			nbr_realloc += 1;
-			tab[ptr_idx] = ft_realloc(tab[ptr_idx], rand() % 7000);
+			tab[ptr_idx] = ft_realloc(tab[ptr_idx], rand() % 50000);
 		}
 		else
 		{
 			nbr_malloc += 1;
-			tab[ptr_idx] = ft_malloc(rand() % 7000);
+			tab[ptr_idx] = ft_malloc(rand() % 10000);
 
 		}
 		i += 1;
 	}
-	show_alloc_mem();
+	//show_alloc_mem();
 	printf("RESULTS -------------------------------\n");
 	printf("Number of malloc : %d\n", nbr_malloc);
 	printf("Number of free : %d\n", nbr_free);

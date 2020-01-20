@@ -27,8 +27,7 @@
 # define TINY_PAGES			32
 # define SMALL_PAGES		244
 
-# define HDR_SIZE_ALLOC		16
-# define HDR_SIZE_FREE		32
+# define HDR_SIZE			32
 
 # define FTR_HEAP			8
 # define HDR_HEAP			8

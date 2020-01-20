@@ -53,7 +53,7 @@ void			ft_free(void *ptr)
 
 	if (!ptr)
 		return;
-	ptr = ptr - HDR_SIZE_ALLOC;
+	ptr = ptr - HDR_SIZE;
 	current_heap = find_current_heap(ptr);
 	if (!current_heap || !((ptr > (void*)current_heap) && (ptr < current_heap->current_footer)))
 		return;

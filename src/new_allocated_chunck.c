@@ -68,14 +68,9 @@ void			*new_allocated_chunk(void* selected_chunk, size_t size_user, void **begin
 	t_freechunk		*selected_cast;
 	selected_cast = (t_freechunk*)selected_chunk;
 	
-	chunk_size = size_user + HDR_SIZE_ALLOC;
-	if (ft_size_wo_flags(selected_cast->mchunk_size) - chunk_size >= HDR_SIZE_FREE)
-	{
-		if (chunk_size >= HDR_SIZE_FREE)
-			create_new_free_chunk(begin, selected_cast, chunk_size, find_current_heap((void*)selected_chunk));
-		else
-			create_new_free_chunk(begin, selected_cast, HDR_SIZE_FREE, find_current_heap((void*)selected_chunk));
-	}
+	chunk_size = size_user + HDR_SIZE;
+	if (ft_size_wo_flags(selected_cast->mchunk_size) - chunk_size >= HDR_SIZE)
+		create_new_free_chunk(begin, selected_cast, chunk_size, find_current_heap((void*)selected_chunk));
 	ft_chunk_allocation(selected_cast, begin);
-	return ((void*)selected_cast + HDR_SIZE_ALLOC);
+	return ((void*)selected_cast + HDR_SIZE);
 }

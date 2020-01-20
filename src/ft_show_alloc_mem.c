@@ -51,11 +51,11 @@ static void		print_heap(void *ptr_heap)
 	{
 		chunk_size = ft_size_wo_flags(ptr_chunk->mchunk_size);
 		if ((ptr_chunk->mchunk_size & F_FLAG))
-			ft_printf("%p - %p : %lu octets -> FREE_BLOCK\n", (void*)ptr_chunk + HDR_SIZE_FREE,
-					(void*)ptr_chunk + chunk_size, chunk_size - HDR_SIZE_ALLOC);
+			ft_printf("%p - %p : %lu octets -> FREE_BLOCK\n", (void*)ptr_chunk + HDR_SIZE,
+					(void*)ptr_chunk + chunk_size, chunk_size - HDR_SIZE);
 		else
-			ft_printf("%p - %p : %lu octets -> ALLOCATED_BLOCK\n", (void*)ptr_chunk + HDR_SIZE_ALLOC,
-					(void*)ptr_chunk + chunk_size, chunk_size - HDR_SIZE_ALLOC);
+			ft_printf("%p - %p : %lu octets -> ALLOCATED_BLOCK\n", (void*)ptr_chunk + HDR_SIZE,
+					(void*)ptr_chunk + chunk_size, chunk_size - HDR_SIZE);
 		ptr_chunk = (void*)ptr_chunk + ft_size_wo_flags(ptr_chunk->mchunk_size);
 	}
 }

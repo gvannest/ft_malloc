@@ -22,7 +22,7 @@ void		*search_free(void *free_list, size_t size_user)
 	list_copy = (t_freechunk*)free_list;
 	while (list_copy)
 	{
-		if (ft_size_wo_flags(list_copy->mchunk_size) >= (size_user + HDR_SIZE_ALLOC))
+		if (ft_size_wo_flags(list_copy->mchunk_size) >= (size_user + HDR_SIZE))
 			return (void*)list_copy;
 		else
 			list_copy = list_copy->next_freechunk;
