@@ -15,5 +15,6 @@
 t_ptr		g_ptr = {
 	.tiny_free_begin = NULL,
 	.small_free_begin = NULL,
-	.begin_heap = NULL
+	.begin_heap = NULL,
+	.begin_alloc = NULL
 };

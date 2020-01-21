@@ -58,7 +58,7 @@ size_t		align_large_size(size_t size_user)
 }
 
 
-t_chunk		*ft_prev_free(void *ptr, void *begin)
+t_chunk		*ft_find_prev(void *ptr, void *begin)
 {
 	t_chunk *prev_chk;
 	t_chunk *begin_free;
@@ -68,7 +68,7 @@ t_chunk		*ft_prev_free(void *ptr, void *begin)
 	while (begin_free && (void*)begin_free < ptr)
 	{
 		prev_chk = begin_free;
-		begin_free = begin_free->next_freechunk;
+		begin_free = begin_free->next_chunk;
 	}
 	return prev_chk;
 }

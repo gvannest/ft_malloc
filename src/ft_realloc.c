@@ -73,7 +73,7 @@ static void *ft_next_chunk_free(void *ptr, t_chunk *next_chunk, size_t size_user
 	{
 		if (next_size_wo_flags < size_diff + HDR_SIZE)
 		{
-			ft_del_free_list(next_chunk);
+			ft_remove_from_list(next_chunk);
 			ft_update_current_size(ptr, size_wo_flags + next_size_wo_flags);
 			ft_update_chunk_after_free(ptr, size_wo_flags + next_size_wo_flags, 0, current_heap);
 		}
@@ -82,7 +82,7 @@ static void *ft_next_chunk_free(void *ptr, t_chunk *next_chunk, size_t size_user
 			free_chunk = ft_move_free_header(ptr, size_wo_flags, size_diff);
 			ft_update_current_size(ptr, size_wo_flags + size_diff);
 			ft_update_chunk_after_free(free_chunk, next_size_wo_flags - size_diff, 1, current_heap);
-			update_freelist(((t_chunk*)free_chunk)->prev_chunk, (t_chunk*)free_chunk, ((t_chunk*)free_chunk)->next_freechunk);
+			update_freelist(((t_chunk*)free_chunk)->prev_chunk, (t_chunk*)free_chunk, ((t_chunk*)free_chunk)->next_chunk);
 		}
 		return (ptr + HDR_SIZE);
 	}

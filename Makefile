@@ -17,7 +17,7 @@ endif
 
 # COMPILATION
 CC = gcc
-CFLAGS = #-Wall #-Wextra #-Werror #-Wpadded -Weverything
+CFLAGS = -Wall -Wextra -Werror #-Wpadded -Weverything
 ADDFLAGS = -g
 SYSFLAG =  #-shared
 
@@ -101,7 +101,7 @@ $(NAME_2): $(OBJ)
 	@echo -e "--$(LOG_CLEAR)$(LOG_MAGENTA)$(NAME_2)$(LOG_NOCOLOR)....................... $(LOG_ORANGE)assembling$(LOG_NOCOLOR)$(LOG_UP)"
 	@$(CC) $(CFLAGS) $(SYSFLAG) $(ADD_FLAGS) $(LIBFT) $(OBJ) -o $@
 	@echo -e "--$(LOG_CLEAR)$(LOG_CYAN)$(NAME_2)$(LOG_NOCOLOR) compiled................. $(LOG_GREEN)✓$(LOG_NOCOLOR)"
-	#ln -fs $(NAME) $(SYMLINK)
+	ln -fs $(NAME_2) $(SYMLINK)
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@$(CC) $(CFLAGS) $(CPPFLAGS) $(ADDFLAGS) -c -o $@ $<

@@ -36,6 +36,7 @@ typedef struct		s_ptr
 {
 	void			*tiny_free_begin;
 	void			*small_free_begin;
+	void			*begin_alloc;
 	void			*begin_heap;
 }					t_ptr;
 
@@ -45,10 +46,10 @@ typedef struct		s_ptr
  */
 typedef struct		s_chunk
 {
-	size_t					mchunk_prevsize;
-	size_t					mchunk_size;
+	size_t				mchunk_prevsize;
+	size_t				mchunk_size;
 	struct s_chunk		*prev_chunk;
-	struct s_chunk		*next_freechunk;
+	struct s_chunk		*next_chunk;
 }							t_chunk;
 
 typedef struct		s_heapheader
@@ -90,14 +91,14 @@ void				print_free_chunk(void *ptr_free);
 void				print_alloc_chunk(void *ptr_alloc);
 void				print_info_heap(void *ptr_heap, size_t heap_size);
 
-t_chunk			*ft_prev_free(void *ptr, void *begin_free);
+t_chunk			*ft_find_prev(void *ptr, void *begin_free);
 
 void				set_prev_size(size_t prev_size, void *chunk);
 void				set_size(size_t size, void *chunk);
 void				set_prev_chunk(t_chunk *prev, void *chunk);
 void				set_next_chunk(t_chunk *next, void *chunk);
 t_chunk			ft_set_header_free(size_t prev_size, size_t chunk_size, t_chunk *prev_chunk, t_chunk *next_chunk);
-void				ft_del_free_list(t_chunk *chunk);
+void				ft_remove_from_list(t_chunk *chunk);
 size_t				ft_flags(size_t size);
 
 void	update_freelist(t_chunk *prev_free, t_chunk* current, t_chunk *next_free);

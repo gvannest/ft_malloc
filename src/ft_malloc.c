@@ -50,7 +50,7 @@ static void		*ft_tiny_small(size_t size, size_t call_size, void **begin_free)
 	else
 	{
 		ptr = call_mmap(call_size);
-		ft_first_free_chunk(ptr + HDR_HEAP, call_size - FTR_HEAP - HDR_HEAP, ft_prev_free(ptr + HDR_HEAP, *begin_free));
+		ft_first_free_chunk(ptr + HDR_HEAP, call_size - FTR_HEAP - HDR_HEAP, ft_find_prev(ptr + HDR_HEAP, *begin_free));
 		ft_set_header_footer_heap(ptr, call_size);
 		return new_allocated_chunk(ptr + HDR_HEAP, size, begin_free);
 	}

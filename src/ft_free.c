@@ -15,6 +15,7 @@
 
 static	void	free_tinysmall(void *ptr, size_t size_wo_flags)
 {
+	ft_remove_from_list(ptr);
 	if (size_wo_flags < TINY_MAX_SIZE)
 		ft_change_header_to_free(ptr, &(g_ptr.tiny_free_begin));
 	else if (size_wo_flags < SMALL_MAX_SIZE)

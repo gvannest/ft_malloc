@@ -19,6 +19,7 @@
 
 int		main(void)
 {
+/*
 	void	*ptr;
 	int		count;
 	int		size;
@@ -37,7 +38,36 @@ int		main(void)
 	print_alloc_chunk(ptr - HDR_SIZE);
 	ft_free(ptr);
 }
+*/
+
+	void* ptr1;
+	ptr1 = ft_malloc(43);
+	void* ptr2;
+	ptr2 = ft_malloc(456);
+	void* ptr3;
+	ptr3 = ft_malloc(634);
+	void* ptr4;
+	ptr4 = ft_malloc(77);
+	void* ptr5;
+	ptr5 = ft_malloc(985);
+	void* ptr6;
+	ptr6 = ft_malloc(222);
+
+	ft_free(ptr2);
+	ft_free(ptr3);
+	ft_free(ptr5);
+
+	show_alloc_mem();
+	while (g_ptr.begin_alloc)
+	{
+		print_alloc_chunk(g_ptr.begin_alloc);
+		g_ptr.begin_alloc = ((t_chunk*)g_ptr.begin_alloc)->next_chunk;
+	}
+
+}
+
 /*
+
 	srand(time(NULL));
 	char *tab[10000];
 	int i = 0;
@@ -83,7 +113,7 @@ int		main(void)
 		}
 		i += 1;
 	}
-	show_alloc_mem();
+	
 	printf("RESULTS -------------------------------\n");
 	printf("Number of malloc : %d\n", nbr_malloc);
 	printf("Number of free : %d\n", nbr_free);
