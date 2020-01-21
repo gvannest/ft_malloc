@@ -17,7 +17,8 @@ static void *ft_new_alloc(void *ptr, size_t size, size_t old_size)
 	void *new_ptr;
 
 	old_size = old_size > size ? size : old_size;
-	new_ptr = ft_malloc(size);
+	if (!(new_ptr = ft_malloc(size)))
+		return NULL;
 	ft_memcpy(new_ptr, ptr, old_size);
 	ft_free(ptr);
 	return new_ptr;

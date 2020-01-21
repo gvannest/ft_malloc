@@ -101,5 +101,7 @@ t_chunk			ft_set_header_free(size_t prev_size, size_t chunk_size, t_chunk *prev_
 void				ft_remove_from_list(t_chunk *chunk);
 size_t				ft_flags(size_t size);
 
-void	update_freelist(t_chunk *prev_free, t_chunk* current, t_chunk *next_free);
+void				update_freelist(t_chunk *prev_free, t_chunk* current, t_chunk *next_free);
+
+void       			*calloc(size_t nmemb, size_t size)
 #endif

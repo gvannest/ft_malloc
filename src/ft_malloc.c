@@ -36,7 +36,8 @@ static void		*ft_tiny_small(size_t size, size_t call_size, void **begin_free)
 	ptr = NULL;
 	if (!(*begin_free))
 	{
-		*begin_free = call_mmap(call_size);
+		if (!(*begin_free = call_mmap(call_size)))
+			return NULL;
 		ft_first_free_chunk(*begin_free + HDR_HEAP, call_size - FTR_HEAP - HDR_HEAP, NULL);
 		ft_set_header_footer_heap(*begin_free, call_size);
 		(!g_ptr.begin_heap) ? g_ptr.begin_heap = *begin_free : 0;
@@ -49,7 +50,8 @@ static void		*ft_tiny_small(size_t size, size_t call_size, void **begin_free)
 	}
 	else
 	{
-		ptr = call_mmap(call_size);
+		if (!(ptr = call_mmap(call_size)))
+			return NULL;
 		ft_first_free_chunk(ptr + HDR_HEAP, call_size - FTR_HEAP - HDR_HEAP, ft_find_prev(ptr + HDR_HEAP, *begin_free));
 		ft_set_header_footer_heap(ptr, call_size);
 		return new_allocated_chunk(ptr + HDR_HEAP, size, begin_free);
@@ -63,7 +65,8 @@ static void		*ft_large(size_t size)
 
 	ptr = NULL;
 	call_size = align_large_size(size + HDR_HEAP + FTR_HEAP + HDR_SIZE);
-	ptr = call_mmap(call_size);
+	if (!(ptr = call_mmap(call_size)))
+		return NULL;
 	ft_large_allocation(ptr + HDR_HEAP, call_size);
 	ft_set_header_footer_heap(ptr, call_size);
 	(!g_ptr.begin_heap) ? g_ptr.begin_heap = ptr : 0;
