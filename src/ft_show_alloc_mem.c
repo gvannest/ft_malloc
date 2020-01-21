@@ -31,13 +31,46 @@ void	print_free_chunk(void *ptr_free)
 		ft_printf("header chunk (free) / next_chunk : %p\n", (((t_chunk*)(ptr_free))->next_freechunk));
 }
 
+void		convert_to_hex(void *ptr)
+{
+	int		index;
+	char	hex_value[9];
+
+	index = 0;
+	ft_bzero(hex_value, 9);
+	printf(" 0x");
+	while (index < 8)
+	{
+		hex_value[index++] = BASE[( (*((unsigned char*)(ptr)) / 16) % 16) ];
+		hex_value[index++] = BASE[(*((unsigned char*)(ptr))) % 16];
+		ptr = ptr + 1;
+	}
+	hex_value[8] = '\0';
+	printf("%s", hex_value);
+}
+
 void	print_alloc_chunk(void *ptr_alloc)
 {
+		size_t	size;
+
+		size = 0;
 		printf("begin alloc chunk : %p\n", ptr_alloc);
+		printf("header alloc chunk / size : %lu\n", (((t_chunk*)(ptr_alloc))->mchunk_size));
 		printf("header alloc chunk / prevsize : %lu\n", (((t_chunk*)(ptr_alloc))->mchunk_prevsize));
 		printf("header chunk (alloc) / size with flags : %lu\n", (((t_chunk*)(ptr_alloc))->mchunk_size));
 		printf("header chunk (alloc) / size wo flags : %lu\n", ft_size_wo_flags(((t_chunk*)(ptr_alloc))->mchunk_size));
+		while (size < ((t_chunk*)(ptr_alloc))->mchunk_size - HDR_SIZE)
+		{	
+			if (!(size) || (size % 16 == 0))
+				printf("%p: ", (void*)(ptr_alloc + HDR_SIZE + size));
+			convert_to_hex((void*)(ptr_alloc + HDR_SIZE + size));
+			size += 4;
+			if (size / 16 && (size % 16 == 0))
+				printf("\n");
+		}
 }
+
+
 
 static void		print_heap(void *ptr_heap)
 {

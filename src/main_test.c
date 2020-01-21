@@ -19,7 +19,25 @@
 
 int		main(void)
 {
+	void	*ptr;
+	int		count;
+	int		size;
 
+	count = 0;
+	size = 5;
+	ptr = NULL;
+	ptr = ft_malloc(size * sizeof(size_t));
+	printf("ptr init = %p\n", ptr);
+
+	while (count < size)
+	{
+		*((size_t*)( ptr + (count * sizeof(size_t))) ) = UINT32_MAX;
+		count++;
+	}
+	print_alloc_chunk(ptr - HDR_SIZE);
+	ft_free(ptr);
+}
+/*
 	srand(time(NULL));
 	char *tab[10000];
 	int i = 0;
@@ -73,7 +91,7 @@ int		main(void)
 	printf("Number of realloc with free before : %d\n", nbr_realloc_free);
 	return (0);
 }
-
+*/
 
 
 

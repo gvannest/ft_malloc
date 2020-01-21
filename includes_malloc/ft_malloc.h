@@ -21,7 +21,7 @@
 # define F_FLAG 4
 # define M_FLAG 2
 # define P_FLAG 1
-
+# define BASE	"0123456789abcdef"
 # define TINY_MAX_SIZE		1025
 # define SMALL_MAX_SIZE		8193
 # define TINY_PAGES			32
