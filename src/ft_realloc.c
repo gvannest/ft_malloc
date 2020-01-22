@@ -59,7 +59,7 @@ static void ft_update_chunk_after_free(void *prev_ptr, size_t new_size, char pre
 		size = size & ~P_FLAG;
 		set_size(size, prev_ptr + new_size);
 	}
-	set_prev_size(new_size, prev_ptr + new_size);
+	set_prev_size(ft_size_wo_flags(new_size), prev_ptr + new_size);
 }
 
 static void *ft_next_chunk_free(void *ptr, t_chunk *next_chunk, size_t size_user, size_t size_wo_flags, t_heapheader *current_heap)

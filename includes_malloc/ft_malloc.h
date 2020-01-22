@@ -91,18 +91,18 @@ void				print_free_chunk(void *ptr_free);
 void				print_alloc_chunk(void *ptr_alloc);
 void				print_info_heap(void *ptr_heap, size_t heap_size);
 
-t_chunk			*ft_find_prev(void *ptr, void *begin_free);
+t_chunk			*	ft_find_prev(void *ptr, void *begin_free);
 
 void				set_prev_size(size_t prev_size, void *chunk);
 void				set_size(size_t size, void *chunk);
 void				set_prev_chunk(t_chunk *prev, void *chunk);
 void				set_next_chunk(t_chunk *next, void *chunk);
-t_chunk			ft_set_header_free(size_t prev_size, size_t chunk_size, t_chunk *prev_chunk, t_chunk *next_chunk);
+t_chunk				ft_set_header_free(size_t prev_size, size_t chunk_size, t_chunk *prev_chunk, t_chunk *next_chunk);
 void				ft_remove_from_list(t_chunk *chunk);
 size_t				ft_flags(size_t size);
 
 void				update_freelist(t_chunk *prev_free, t_chunk* current, t_chunk *next_free);
 
 void       			*calloc(size_t nmemb, size_t size);
-void      			ft_defrag_prev(void* chunk_freed);
+void       ft_defrag(void *chunk_freed, t_heapheader *current_heap);
 #endif
