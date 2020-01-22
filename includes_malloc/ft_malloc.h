@@ -103,5 +103,6 @@ size_t				ft_flags(size_t size);
 
 void				update_freelist(t_chunk *prev_free, t_chunk* current, t_chunk *next_free);
 
-void       			*calloc(size_t nmemb, size_t size)
+void       			*calloc(size_t nmemb, size_t size);
+void      			ft_defrag_prev(void* chunk_freed);
 #endif

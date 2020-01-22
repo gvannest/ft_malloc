@@ -43,7 +43,7 @@ static void		ft_add_free_block(void *ptr, t_chunk *prev_chk, t_chunk *next_chk)
 
 }
 
-static void		ft_insert_free_list(void *ptr, void **begin_free)
+static void		ft_insert_list(void *ptr, void **begin_free)
 {
 	t_chunk		*prev_free;
 	t_chunk		*next_free;
@@ -60,21 +60,35 @@ static void		ft_insert_free_list(void *ptr, void **begin_free)
 	{
 		next_free = prev_free->next_chunk;
 		ft_add_free_block(ptr, prev_free, next_free);
-		prev_free->next_chunk = (t_chunk*)ptr;
-		if (next_free)
-			next_free->prev_chunk = ptr;
+		// prev_free->next_chunk = (t_chunk*)ptr;
+		// if (next_free)
+			// next_free->prev_chunk = ptr;
+		update_freelist(prev_free, ptr, next_free);
+
 	}
 }
 
 void			ft_change_header_to_free(void *ptr, void **begin_free)
 {
+	t_heapheader	*current_heap;
+	t_chunk			*next;
+
 	if (!(*begin_free))
 	{
 		ft_first_free_chunk(ptr, (((t_chunk*)ptr)->mchunk_size), NULL);
 		*begin_free = ptr;
 	}
+	 else if (((t_chunk*)ptr)->mchunk_size & P_FLAG)
+	 	ft_defrag_prev(ptr);
+	// else if ( ptr + ((t_chunk*)ptr)->mchunk_size & P_FLAG  )
 	else
-		ft_insert_free_list(ptr, begin_free);
+	{
+		ft_insert_list(ptr, begin_free);
+		next = ptr + ft_size_wo_flags(((t_chunk*)ptr)->mchunk_size);
+		current_heap = find_current_heap(ptr);
+		if (next < (t_chunk*)(current_heap->current_footer))
+			set_size(next->mchunk_size | P_FLAG, next);
+	}	
 }
 
 
