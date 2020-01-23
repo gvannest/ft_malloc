@@ -22,10 +22,10 @@
 # define M_FLAG 2
 # define P_FLAG 1
 # define BASE	"0123456789abcdef"
-# define TINY_MAX_SIZE		1025
-# define SMALL_MAX_SIZE		8193
-# define TINY_PAGES			32
-# define SMALL_PAGES		244
+# define TINY_MAX_SIZE		1024
+# define SMALL_MAX_SIZE		4096
+# define TINY_PAGES			128
+# define SMALL_PAGES		512
 
 # define HDR_SIZE			32
 
@@ -104,5 +104,7 @@ size_t				ft_flags(size_t size);
 void				update_freelist(t_chunk *prev_free, t_chunk* current, t_chunk *next_free);
 
 void       			*calloc(size_t nmemb, size_t size);
-void       ft_defrag(void *chunk_freed, t_heapheader *current_heap);
+void       		ft_defrag(void *chunk_freed, t_heapheader *current_heap);
+void        	ft_return_pages(void *free_chunk, size_t heap_size, t_heapheader *current_heap, void **begin_free);
+void			ft_update_prev_footer(void *ptr);
 #endif

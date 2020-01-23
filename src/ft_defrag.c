@@ -39,3 +39,18 @@ void       ft_defrag(void *chunk_freed, t_heapheader *current_heap)
         ft_merge_chunks(chunk_to_merge, chunk_to_grow, current_heap);
     }
 }
+
+void        ft_return_pages(void *free_chunk, size_t heap_size, t_heapheader *current_heap, void **begin_free)
+{
+    size_t      chunk_size;
+
+    chunk_size = ft_size_wo_flags(((t_chunk*)free_chunk)->mchunk_size);
+    if (chunk_size == heap_size && (g_ptr.begin_heap != current_heap))
+    {
+        if (*begin_free == free_chunk)
+            *begin_free = ((t_chunk*)free_chunk)->next_chunk;
+        ft_remove_from_list(free_chunk);
+        ft_update_prev_footer(current_heap);
+        munmap(current_heap, heap_size + HDR_HEAP + FTR_HEAP);
+    }
+}

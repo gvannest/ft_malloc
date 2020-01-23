@@ -15,14 +15,27 @@
 
 static	void	free_tinysmall(void *ptr, size_t size_wo_flags)
 {
+	t_heapheader	*current_heap;
+	size_t			heap_size;
+
+	current_heap = find_current_heap(ptr);
 	ft_remove_from_list(ptr);
 	if (size_wo_flags < TINY_MAX_SIZE)
+	{
+		heap_size = (TINY_MAX_SIZE * getpagesize()) - FTR_HEAP - HDR_HEAP;
 		ft_change_header_to_free(ptr, &(g_ptr.tiny_free_begin));
+		ft_return_pages(ptr, heap_size, current_heap, &(g_ptr.tiny_free_begin));
+	}	
 	else if (size_wo_flags < SMALL_MAX_SIZE)
+	{	
+		heap_size = (SMALL_MAX_SIZE * getpagesize()) - FTR_HEAP - HDR_HEAP;
 		ft_change_header_to_free(ptr, &(g_ptr.small_free_begin));
+		ft_return_pages(ptr, heap_size, current_heap, &(g_ptr.small_free_begin));
+	}
 }
 
-static void		ft_update_prev_footer(void *ptr)
+
+void			ft_update_prev_footer(void *ptr)
 {
 	t_heapfooter	*prev_footer;
 	t_heapfooter 	*current_footer;
