@@ -5,6 +5,13 @@ export DYLD_INSERT_LIBRARIES='libft_malloc.so'
 export DYLD_FORCE_FLAT_NAMESPACE=1
 
 # ls ~
- ls -Rgals /
-#ls -Rgals ~/Library
+# ls -Rgals /
+ls -Rgals ~
 # ./test
+
+# env DYLD_LIBRARY_PATH=.
+# env DYLD_INSERT_LIBRARIES='libft_malloc.so'
+# env DYLD_FORCE_FLAT_NAMESPACE=1
+
+# g_ptr.tiny_free_begin
+# g_ptr.small_free_begin

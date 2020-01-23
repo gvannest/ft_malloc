@@ -6,7 +6,7 @@
 /*   By: gvannest <gvannest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/10 10:37:51 by gvannest          #+#    #+#             */
-/*   Updated: 2020/01/18 19:28:24 by gvannest         ###   ########.fr       */
+/*   Updated: 2020/01/23 16:21:29 by gvannest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ static void		ft_chunk_allocation(t_chunk *selected_chunk, void **begin)
 	g_ptr.begin_alloc = g_ptr.begin_alloc == NULL ? selected_chunk : g_ptr.begin_alloc;
 	prev_alloc = ft_find_prev(selected_chunk, &g_ptr.begin_alloc);
 	next_alloc = prev_alloc ? prev_alloc->next_chunk : g_ptr.begin_alloc;
+
 	update_freelist(prev_alloc, selected_chunk, next_alloc);
 }
 

@@ -30,6 +30,7 @@ static void *ft_move_free_header(void *ptr, size_t chunk_size, size_t size_diff)
 	size_t current_free_size;
 	void *free_block;
 	t_chunk	free_tmp;
+	void	**begin_free;
 
 	free_block = ptr + chunk_size;
 	current_free_size = ft_size_wo_flags(((t_chunk *)free_block)->mchunk_size);
@@ -38,6 +39,11 @@ static void *ft_move_free_header(void *ptr, size_t chunk_size, size_t size_diff)
 	*((t_chunk*)(free_block + size_diff)) = free_tmp;
 	set_size((current_free_size - size_diff) | flags, free_block + size_diff);
 	set_prev_size(((t_chunk *)free_block)->mchunk_prevsize + size_diff, free_block + size_diff);
+	if (chunk_size < TINY_MAX_SIZE)
+		begin_free = &(g_ptr.tiny_free_begin);
+	else
+		begin_free = &(g_ptr.small_free_begin);
+	*begin_free = (*begin_free == free_block ? free_block + size_diff : *begin_free);
 
 	return (free_block + size_diff);
 }
@@ -70,24 +76,20 @@ static void *ft_next_chunk_free(void *ptr, t_chunk *next_chunk, size_t size_user
 
 	next_size_wo_flags = ft_size_wo_flags(next_chunk->mchunk_size);
 	size_diff = size_user - (size_wo_flags - HDR_SIZE);
-	if (next_size_wo_flags >= size_diff)
+	if (next_size_wo_flags < size_diff + HDR_SIZE)
 	{
-		if (next_size_wo_flags < size_diff + HDR_SIZE)
-		{
-			ft_remove_from_list(next_chunk);
-			ft_update_current_size(ptr, size_wo_flags + next_size_wo_flags);
-			ft_update_chunk_after_free(ptr, size_wo_flags + next_size_wo_flags, 0, current_heap);
-		}
-		else
-		{
-			free_chunk = ft_move_free_header(ptr, size_wo_flags, size_diff);
-			ft_update_current_size(ptr, size_wo_flags + size_diff);
-			ft_update_chunk_after_free(free_chunk, next_size_wo_flags - size_diff, 1, current_heap);
-			update_freelist(((t_chunk*)free_chunk)->prev_chunk, (t_chunk*)free_chunk, ((t_chunk*)free_chunk)->next_chunk);
-		}
-		return (ptr + HDR_SIZE);
+		ft_remove_from_list(next_chunk);
+		ft_update_current_size(ptr, size_wo_flags + next_size_wo_flags);
+		ft_update_chunk_after_free(ptr, size_wo_flags + next_size_wo_flags, 0, current_heap);
 	}
-	return (ft_new_alloc(ptr + HDR_SIZE, size_user, size_wo_flags - HDR_SIZE));
+	else
+	{
+		free_chunk = ft_move_free_header(ptr, size_wo_flags, size_diff);
+		ft_update_current_size(ptr, size_wo_flags + size_diff);
+		ft_update_chunk_after_free(free_chunk, next_size_wo_flags - size_diff, 1, current_heap);
+		update_freelist(((t_chunk*)free_chunk)->prev_chunk, (t_chunk*)free_chunk, ((t_chunk*)free_chunk)->next_chunk);
+	}
+	return (ptr + HDR_SIZE);
 }
 
 static char ft_is_same_heap_size(size_t size_chunk, size_t size_user)
@@ -134,13 +136,14 @@ void *realloc(void *ptr, size_t size)
 		return (ptr + HDR_SIZE);
 	size_aligned = align_size(size);
 	size_wo_flags = ft_size_wo_flags(((t_chunk*)ptr)->mchunk_size);
+
 	if (!ptr || (ptr && ((t_chunk*)ptr)->mchunk_size & F_FLAG))
 		return NULL;
 	if (!(heap_type = ft_is_same_heap_size(size_wo_flags, size_aligned)))
 		return ft_new_alloc(ptr + HDR_SIZE, size_aligned, size_wo_flags - HDR_SIZE);
 	
 	if (size_aligned + HDR_SIZE <= size_wo_flags)
-		return ft_reduce_chunk(ptr, size_aligned + HDR_SIZE, size_wo_flags, heap_type);
+		return ft_reduce_chunk(ptr, size_aligned + HDR_SIZE, size_wo_flags, heap_type); 
 	
 	next_chunk = ptr + size_wo_flags;
 
@@ -149,7 +152,8 @@ void *realloc(void *ptr, size_t size)
 
 	if (!(next_chunk->mchunk_size & F_FLAG))
 		return ft_new_alloc(ptr + HDR_SIZE, size_aligned, size_wo_flags - HDR_SIZE);
-// print_free_chunk(next_chunk);
-	// return ft_new_alloc(ptr + HDR_SIZE, size_aligned, size_wo_flags - HDR_SIZE);
-	return ft_next_chunk_free(ptr, (t_chunk *)next_chunk, size_aligned, size_wo_flags, current_heap);
+	if (ft_size_wo_flags(next_chunk->mchunk_size) > size_aligned + HDR_SIZE)
+		return ft_next_chunk_free(ptr, (t_chunk *)next_chunk, size_aligned, size_wo_flags, current_heap);
+	return ft_new_alloc(ptr + HDR_SIZE, size_aligned, size_wo_flags - HDR_SIZE);
+
 }

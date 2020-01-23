@@ -6,7 +6,7 @@
 /*   By: gvannest <gvannest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 17:15:20 by gvannest          #+#    #+#             */
-/*   Updated: 2020/01/18 10:15:02 by gvannest         ###   ########.fr       */
+/*   Updated: 2020/01/23 16:51:39 by gvannest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ extern t_ptr	g_ptr;
 void				*malloc(size_t size);
 void				free(void *ptr);
 void				*realloc(void *ptr, size_t size);
+
+
 void				*call_mmap(size_t call_size);
 
 size_t				ft_add_flags_to_size(size_t size_init, char a, char m, char p);
@@ -91,7 +93,7 @@ void				print_free_chunk(void *ptr_free);
 void				print_alloc_chunk(void *ptr_alloc);
 void				print_info_heap(void *ptr_heap, size_t heap_size);
 
-t_chunk			*	ft_find_prev(void *ptr, void *begin_free);
+t_chunk				*ft_find_prev(void *ptr, void *begin_free);
 
 void				set_prev_size(size_t prev_size, void *chunk);
 void				set_size(size_t size, void *chunk);

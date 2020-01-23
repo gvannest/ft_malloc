@@ -6,7 +6,7 @@
 /*   By: gvannest <gvannest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 16:21:16 by gvannest          #+#    #+#             */
-/*   Updated: 2020/01/18 17:47:59 by gvannest         ###   ########.fr       */
+/*   Updated: 2020/01/23 17:09:50 by gvannest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,18 @@ t_chunk		ft_set_header_free(size_t prev_size, size_t chunk_size, t_chunk *prev_c
 
 void		ft_remove_from_list(t_chunk *chunk)
 {
+	size_t	chunk_size;
+	void	**begin_list;
+
+	chunk_size = ft_size_wo_flags(chunk->mchunk_size);
+	if (!(chunk->mchunk_size & F_FLAG))
+		begin_list = &(g_ptr.begin_alloc);
+	else
+		begin_list = (chunk_size < TINY_MAX_SIZE ? &(g_ptr.tiny_free_begin) : &(g_ptr.small_free_begin));
 	if (chunk->prev_chunk)
 		chunk->prev_chunk->next_chunk = chunk->next_chunk;
 	if (chunk->next_chunk)
 		chunk->next_chunk->prev_chunk = chunk->prev_chunk;
+	*begin_list = (*begin_list == chunk ? chunk->next_chunk : *begin_list);
 }
 

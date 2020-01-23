@@ -60,11 +60,7 @@ static void		ft_insert_list(void *ptr, void **begin_free)
 	{
 		next_free = prev_free->next_chunk;
 		ft_add_free_block(ptr, prev_free, next_free);
-		// prev_free->next_chunk = (t_chunk*)ptr;
-		// if (next_free)
-			// next_free->prev_chunk = ptr;
 		update_freelist(prev_free, ptr, next_free);
-
 	}
 }
 
