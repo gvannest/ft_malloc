@@ -17,7 +17,7 @@ endif
 
 # COMPILATION
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror #-Wpadded -Weverything
+CFLAGS = -Wall -Wextra #-Werror #-Wpadded -Weverything
 ADDFLAGS = -g
 SYSFLAG =  -shared
 
@@ -50,7 +50,6 @@ SRC_NAME = \
 	ft_show_alloc_mem.c \
 	ft_realloc.c \
 	headers.c \
-	ft_defrag.c
 	
 
 OBJ_NAME = $(SRC_NAME:.c=.o)
