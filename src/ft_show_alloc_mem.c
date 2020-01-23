@@ -36,14 +36,16 @@ void		convert_to_hex(void *ptr)
 	int		index;
 	char	hex_value[9];
 
-	index = 0;
+	index = 7;
 	ft_bzero(hex_value, 9);
 	printf(" 0x");
-	while (index < 8)
+	while (index >= 0)
 	{
-		hex_value[index++] = BASE[( (*((unsigned char*)(ptr)) / 16) % 16) ];
-		hex_value[index++] = BASE[(*((unsigned char*)(ptr))) % 16];
-		ptr = ptr + 1;
+		hex_value[index] = BASE[(*((unsigned char*)(ptr))) % 16];
+		index--;
+		hex_value[index] = BASE[( (*((unsigned char*)(ptr)) / 16) % 16) ];
+		index--;
+		ptr++;
 	}
 	hex_value[8] = '\0';
 	printf("%s", hex_value);

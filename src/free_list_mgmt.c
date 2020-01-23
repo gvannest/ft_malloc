@@ -68,7 +68,7 @@ static void		ft_insert_list(void *ptr, void **begin_free)
 	}
 }
 
-void			ft_change_header_to_free(void *ptr, void **begin_free)
+void			*ft_change_header_to_free(void *ptr, void **begin_free)
 {
 	t_heapheader	*current_heap;
 	t_chunk			*next;
@@ -77,6 +77,7 @@ void			ft_change_header_to_free(void *ptr, void **begin_free)
 	{
 		ft_first_free_chunk(ptr, (((t_chunk*)ptr)->mchunk_size), NULL);
 		*begin_free = ptr;
+		return ptr;
 	}
 	else
 	{
@@ -85,7 +86,8 @@ void			ft_change_header_to_free(void *ptr, void **begin_free)
 		current_heap = find_current_heap(ptr);
 		if (next < (t_chunk*)(current_heap->current_footer))
 			set_size(next->mchunk_size | P_FLAG, next);
-		ft_defrag(ptr, current_heap);
+		// return ft_defrag(ptr, current_heap);
+		return ptr;
 	}	
 }
 

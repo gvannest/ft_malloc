@@ -66,10 +66,10 @@ static void		ft_chunk_allocation(t_chunk *selected_chunk, void **begin)
 	}	
 	selected_chunk->mchunk_size = (selected_chunk->mchunk_size) & ~F_FLAG;
 
-	 g_ptr.begin_alloc = g_ptr.begin_alloc == NULL ? selected_chunk : g_ptr.begin_alloc;
-	 prev_alloc = ft_find_prev(selected_chunk, &g_ptr.begin_alloc);
-	 next_alloc = prev_alloc ? prev_alloc->next_chunk : g_ptr.begin_alloc;
-	 update_freelist(prev_alloc, selected_chunk, next_alloc);
+	g_ptr.begin_alloc = g_ptr.begin_alloc == NULL ? selected_chunk : g_ptr.begin_alloc;
+	prev_alloc = ft_find_prev(selected_chunk, &g_ptr.begin_alloc);
+	next_alloc = prev_alloc ? prev_alloc->next_chunk : g_ptr.begin_alloc;
+	update_freelist(prev_alloc, selected_chunk, next_alloc);
 }
 
 void			*new_allocated_chunk(void* selected_chunk, size_t size_user, void **begin)

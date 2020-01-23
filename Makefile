@@ -19,7 +19,7 @@ endif
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror #-Wpadded -Weverything
 ADDFLAGS = -g
-SYSFLAG =  #-shared
+SYSFLAG =  -shared
 
 # DEFAULT RULE
 DEFRULE = all
@@ -49,7 +49,8 @@ SRC_NAME = \
 	new_allocated_chunck.c \
 	ft_show_alloc_mem.c \
 	ft_realloc.c \
-	headers.c
+	headers.c \
+	ft_defrag.c
 	
 
 OBJ_NAME = $(SRC_NAME:.c=.o)
@@ -92,16 +93,16 @@ default:
 	@make $(DEFRULE)
 
 .PHONY: all
-all: libftcomp $(OBJ_PATH) $(NAME_2) Makefile
+all: libftcomp $(OBJ_PATH) $(NAME) Makefile
 
 libftcomp:
 	@make all -C $(LIBFT_PATH)
 
-$(NAME_2): $(OBJ)
-	@echo -e "--$(LOG_CLEAR)$(LOG_MAGENTA)$(NAME_2)$(LOG_NOCOLOR)....................... $(LOG_ORANGE)assembling$(LOG_NOCOLOR)$(LOG_UP)"
+$(NAME): $(OBJ)
+	@echo -e "--$(LOG_CLEAR)$(LOG_MAGENTA)$(NAME)$(LOG_NOCOLOR)....................... $(LOG_ORANGE)assembling$(LOG_NOCOLOR)$(LOG_UP)"
 	@$(CC) $(CFLAGS) $(SYSFLAG) $(ADD_FLAGS) $(LIBFT) $(OBJ) -o $@
-	@echo -e "--$(LOG_CLEAR)$(LOG_CYAN)$(NAME_2)$(LOG_NOCOLOR) compiled................. $(LOG_GREEN)✓$(LOG_NOCOLOR)"
-	ln -fs $(NAME_2) $(SYMLINK)
+	@echo -e "--$(LOG_CLEAR)$(LOG_CYAN)$(NAME)$(LOG_NOCOLOR) compiled................. $(LOG_GREEN)✓$(LOG_NOCOLOR)"
+	ln -fs $(NAME) $(SYMLINK)
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@$(CC) $(CFLAGS) $(CPPFLAGS) $(ADDFLAGS) -c -o $@ $<
@@ -110,21 +111,21 @@ $(OBJ_PATH_CH)%.o: $(SRC_PATH_CH)%.c
 	@$(CC) $(CFLAGS) $(CPPFLAGS) $(ADDFLAGS) -c -o $@ $<
 
 $(OBJ_PATH):
-	@echo -e "$(LOG_CLEAR)$(LOG_BLUE)build $(NAME_2)$(LOG_NOCOLOR)"
+	@echo -e "$(LOG_CLEAR)$(LOG_BLUE)build $(NAME)$(LOG_NOCOLOR)"
 	@mkdir -p $(OBJ_PATH)
 
 .PHONY: clean
 clean:
-	@echo -e "$(LOG_CLEAR)$(LOG_BLUE)clean $(NAME_2)$(LOG_NOCOLOR)"
+	@echo -e "$(LOG_CLEAR)$(LOG_BLUE)clean $(NAME)$(LOG_NOCOLOR)"
 	@echo -e "--$(LOG_CLEAR)$(LOG_YELLOW)Objects$(LOG_NOCOLOR) deleted.............. $(LOG_RED)×$(LOG_NOCOLOR)"
 	@rm -rf $(OBJ_PATH)
 	@make clean -C $(LIBFT_PATH)
 
 .PHONY: fclean
 fclean: clean
-	@echo -e "$(LOG_CLEAR)$(LOG_BLUE)fclean $(NAME_2)$(LOG_NOCOLOR)"
+	@echo -e "$(LOG_CLEAR)$(LOG_BLUE)fclean $(NAME)$(LOG_NOCOLOR)"
 	@make fclean -C $(LIBFT_PATH)
-	@rm -f $(NAME_2)
+	@rm -f $(NAME)
 	@rm -f $(SYMLINK)
 
 .PHONY: re

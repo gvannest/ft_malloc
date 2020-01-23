@@ -16,21 +16,25 @@
 static	void	free_tinysmall(void *ptr, size_t size_wo_flags)
 {
 	t_heapheader	*current_heap;
-	size_t			heap_size;
+	size_t			max_chunk_size;
 
 	current_heap = find_current_heap(ptr);
 	ft_remove_from_list(ptr);
 	if (size_wo_flags < TINY_MAX_SIZE)
 	{
-		heap_size = (TINY_MAX_SIZE * getpagesize()) - FTR_HEAP - HDR_HEAP;
-		ft_change_header_to_free(ptr, &(g_ptr.tiny_free_begin));
-		ft_return_pages(ptr, heap_size, current_heap, &(g_ptr.tiny_free_begin));
+		ptr = ft_change_header_to_free(ptr, &(g_ptr.tiny_free_begin));
+		max_chunk_size = (TINY_MAX_SIZE * getpagesize()) - FTR_HEAP - HDR_HEAP;
+		// if ((ptr == current_heap + HDR_HEAP) && (current_heap != g_ptr.begin_heap))
+		// 	if (ft_size_wo_flags(((t_chunk*)ptr)->mchunk_size) == max_chunk_size)
+		// 		ft_return_pages(ptr, max_chunk_size, current_heap, &(g_ptr.tiny_free_begin));
 	}	
 	else if (size_wo_flags < SMALL_MAX_SIZE)
 	{	
-		heap_size = (SMALL_MAX_SIZE * getpagesize()) - FTR_HEAP - HDR_HEAP;
 		ft_change_header_to_free(ptr, &(g_ptr.small_free_begin));
-		ft_return_pages(ptr, heap_size, current_heap, &(g_ptr.small_free_begin));
+		max_chunk_size = (SMALL_MAX_SIZE * getpagesize()) - FTR_HEAP - HDR_HEAP;
+		// if ((ptr == current_heap + HDR_HEAP) && (current_heap != g_ptr.begin_heap))
+			// if (ft_size_wo_flags(((t_chunk*)ptr)->mchunk_size) == max_chunk_size)
+				// ft_return_pages(ptr, max_chunk_size, current_heap, &(g_ptr.small_free_begin));
 	}
 }
 
@@ -59,7 +63,7 @@ static	int		free_large(void *ptr, size_t size_wo_flags)
 	return munmap(ptr, size_wo_flags + HDR_HEAP + FTR_HEAP);
 }
 
-void			ft_free(void *ptr)
+void			free(void *ptr)
 {
 	size_t			chunk_size;
 	size_t			size_wo_flags;
@@ -79,6 +83,7 @@ void			ft_free(void *ptr)
 	{
 		if (free_large(ptr - HDR_HEAP, size_wo_flags) == -1)
 			ft_printf("\x1B[31mError while calling munmap on large chunk\x1B[0m\n");
+		return;
 	}
 	else
 		free_tinysmall(ptr, size_wo_flags);

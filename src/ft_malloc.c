@@ -71,10 +71,10 @@ static void		*ft_large(size_t size)
 	ft_set_header_footer_heap(ptr, call_size);
 	(!g_ptr.begin_heap) ? g_ptr.begin_heap = ptr : 0;
 	return (ptr + HDR_SIZE + HDR_HEAP);
-}
+} 
 
 
-void			*ft_malloc(size_t size)
+void			*malloc(size_t size)
 {
 	size = align_size(size);
 	if (size < TINY_MAX_SIZE)

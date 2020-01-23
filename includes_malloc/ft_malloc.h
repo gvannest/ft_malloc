@@ -22,10 +22,10 @@
 # define M_FLAG 2
 # define P_FLAG 1
 # define BASE	"0123456789abcdef"
-# define TINY_MAX_SIZE		1024
-# define SMALL_MAX_SIZE		4096
-# define TINY_PAGES			128
-# define SMALL_PAGES		512
+# define TINY_MAX_SIZE		1025
+# define TINY_PAGES			32
+# define SMALL_MAX_SIZE		8193
+# define SMALL_PAGES		244
 
 # define HDR_SIZE			32
 
@@ -64,16 +64,16 @@ typedef struct		s_heapfooter
 
 extern t_ptr	g_ptr;
 
-void				*ft_malloc(size_t size);
-void				ft_free(void *ptr);
-void				*ft_realloc(void *ptr, size_t size);
+void				*malloc(size_t size);
+void				free(void *ptr);
+void				*realloc(void *ptr, size_t size);
 void				*call_mmap(size_t call_size);
 
 size_t				ft_add_flags_to_size(size_t size_init, char a, char m, char p);
 size_t				ft_size_wo_flags(size_t size);
 void				ft_first_free_chunk(void *ptr, size_t size, t_chunk *last_free);
 void				*search_free(void *free_list, size_t size_user);
-void				ft_change_header_to_free(void *ptr, void **begin_free);
+void				*ft_change_header_to_free(void *ptr, void **begin_free);
 void				ft_large_allocation(void *ptr, size_t size);
 void				*new_allocated_chunk(void* selected_chunk, size_t size_user, void **begin);
 void				create_new_free_chunk(void **begin_free,t_chunk *selected_chunk, size_t size_user, t_heapheader *current_heap);
@@ -104,7 +104,7 @@ size_t				ft_flags(size_t size);
 void				update_freelist(t_chunk *prev_free, t_chunk* current, t_chunk *next_free);
 
 void       			*calloc(size_t nmemb, size_t size);
-void       		ft_defrag(void *chunk_freed, t_heapheader *current_heap);
-void        	ft_return_pages(void *free_chunk, size_t heap_size, t_heapheader *current_heap, void **begin_free);
+void       		*ft_defrag(void *chunk_freed, t_heapheader *current_heap);
+void        	ft_return_pages(void *free_chunk, size_t max_chunk_size, t_heapheader *current_heap, void **begin_free);
 void			ft_update_prev_footer(void *ptr);
 #endif

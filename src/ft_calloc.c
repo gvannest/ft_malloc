@@ -9,7 +9,7 @@ void        *calloc(size_t nmemb, size_t size)
 
     if (!nmemb || !size)
         return NULL;
-    if (!(ptr_user = ft_malloc(nmemb * size)))
+    if (!(ptr_user = malloc(nmemb * size)))
         return NULL;
     ft_bzero(ptr_user, nmemb * size);
     return ptr_user;

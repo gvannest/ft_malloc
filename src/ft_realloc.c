@@ -17,10 +17,10 @@ static void *ft_new_alloc(void *ptr, size_t size, size_t old_size)
 	void *new_ptr;
 
 	old_size = old_size > size ? size : old_size;
-	if (!(new_ptr = ft_malloc(size)))
+	if (!(new_ptr = malloc(size)))
 		return NULL;
 	ft_memcpy(new_ptr, ptr, old_size);
-	ft_free(ptr);
+	free(ptr);
 	return new_ptr;
 }
 
@@ -113,7 +113,7 @@ static void	*ft_reduce_chunk(void *ptr, size_t new_chunk_size, size_t actual_siz
 	return (ptr + HDR_SIZE);
 }
 
-void *ft_realloc(void *ptr, size_t size)
+void *realloc(void *ptr, size_t size)
 {
 	t_chunk	*next_chunk;
 	size_t			size_wo_flags;
@@ -122,10 +122,10 @@ void *ft_realloc(void *ptr, size_t size)
 	t_heapheader	*current_heap;
 
 	if (!ptr)
-		return ft_malloc(size);
+		return malloc(size);
 	if (ptr && !size)
 	{
-		ft_free(ptr);
+		free(ptr);
 		return NULL;
 	}
 	ptr = ptr - HDR_SIZE;

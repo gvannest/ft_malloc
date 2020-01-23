@@ -15,14 +15,14 @@ void        ft_merge_chunks(t_chunk *chunk_to_merge, t_chunk *chunk_to_grow, t_h
     }
 }
 
-void       ft_defrag(void *chunk_freed, t_heapheader *current_heap)
+void       *ft_defrag(void *chunk_freed, t_heapheader *current_heap)
 {
     t_chunk     *chunk_to_merge;
     t_chunk     *chunk_to_grow;
 	void        *prev;
 	void        *next;
 
-    chunk_to_grow = NULL;
+    chunk_to_grow = chunk_freed;
     chunk_to_merge = NULL;
     next = (void*)chunk_freed + ft_size_wo_flags(((t_chunk*)chunk_freed)->mchunk_size);
     if ((next < (void*)(current_heap->current_footer)) && (((t_chunk*)next)->mchunk_size & F_FLAG))
@@ -38,19 +38,14 @@ void       ft_defrag(void *chunk_freed, t_heapheader *current_heap)
         chunk_to_grow = prev;
         ft_merge_chunks(chunk_to_merge, chunk_to_grow, current_heap);
     }
+    return chunk_to_grow;
 }
 
-void        ft_return_pages(void *free_chunk, size_t heap_size, t_heapheader *current_heap, void **begin_free)
+void        ft_return_pages(void *free_chunk, size_t max_chunk_size, t_heapheader *current_heap, void **begin_free)
 {
-    size_t      chunk_size;
-
-    chunk_size = ft_size_wo_flags(((t_chunk*)free_chunk)->mchunk_size);
-    if (chunk_size == heap_size && (g_ptr.begin_heap != current_heap))
-    {
-        if (*begin_free == free_chunk)
-            *begin_free = ((t_chunk*)free_chunk)->next_chunk;
-        ft_remove_from_list(free_chunk);
-        ft_update_prev_footer(current_heap);
-        munmap(current_heap, heap_size + HDR_HEAP + FTR_HEAP);
-    }
+    if (*begin_free == free_chunk)
+        *begin_free = ((t_chunk*)free_chunk)->next_chunk;
+    ft_remove_from_list(free_chunk);
+    ft_update_prev_footer(current_heap);
+    munmap(current_heap, max_chunk_size + HDR_HEAP + FTR_HEAP);
 }
