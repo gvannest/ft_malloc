@@ -32,11 +32,10 @@ void       ft_defrag(void *chunk_freed, t_heapheader *current_heap)
         ft_merge_chunks(chunk_to_merge, chunk_to_grow, current_heap);
     }
     prev = (void*)chunk_freed - ((t_chunk*)chunk_freed)->mchunk_prevsize;
-    if ((prev > (void*)current_heap) && (((t_chunk*)prev)->mchunk_size & F_FLAG))
+    if ((prev > (void*)current_heap) && (prev != chunk_freed) && (((t_chunk*)prev)->mchunk_size & F_FLAG))
     {
         chunk_to_merge = chunk_freed;
         chunk_to_grow = prev;
         ft_merge_chunks(chunk_to_merge, chunk_to_grow, current_heap);
     }
-// Segfault => On dirait que le pointeur begin_free se decale de 8 pour pointer sur mchunk_size...
 }
