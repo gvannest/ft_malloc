@@ -6,7 +6,7 @@
 /*   By: gvannest <gvannest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 17:14:41 by gvannest          #+#    #+#             */
-/*   Updated: 2020/01/18 19:29:33 by gvannest         ###   ########.fr       */
+/*   Updated: 2020/01/23 18:33:15 by gvannest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,58 +20,59 @@
 int		main(void)
 {
 
+	char *tab[200];
+	int i = 0;
+	int ptr_idx = 0;
 
-
-
-/*
-	void	*ptr;
-	int		count;
-	int		size;
-
-	count = 0;
-	size = 5;
-	ptr = NULL;
-	ptr = malloc(size * sizeof(size_t));
-	printf("ptr init = %p\n", ptr);
-
-	while (count < size)
+	while (i < 200)
 	{
-		*((size_t*)( ptr + (count * sizeof(size_t))) ) = 0xffffffffff;
-		count++;
+		tab[i] = NULL;
+		i++;
 	}
-	print_alloc_chunk(ptr - HDR_SIZE);
-	free(ptr);
-}
-*/
-/*
-	void* ptr1;
-	ptr1 = malloc(43);
-	void* ptr2;
-	ptr2 = malloc(440);
-	void* ptr3;
-	ptr3 = malloc(640);
-	void* ptr4;
-	ptr4 = malloc(80);
-	void* ptr5;
-	ptr5 = malloc(985);
-	void* ptr6;
-	ptr6 = malloc(222);
+	i = 0;
 
-	free(ptr4);
-	free(ptr3);
-	free(ptr2);
-
+	while (i < 200)
+	{
+		tab[i] = malloc(1024);
+		i++;
+	}
+	printf("memory read after allocations: \n");
 	show_alloc_mem();
-	// while (g_ptr.begin_alloc)
-	// {
-		// print_alloc_chunk(g_ptr.begin_alloc);
-		// g_ptr.begin_alloc = ((t_chunk*)g_ptr.begin_alloc)->next_chunk;
-	// }
+	printf("-------------------------------------\n\n\n");
 
-}
-*/
+	i--;
 
+	while (i > 80)
+	{
+		free(tab[i]);
+		i--;
+	}
 
+	printf("memory read after free: \n");
+	show_alloc_mem();
+	// printf("-------------------------------------\n");
+	// free(tab[9]);
+	// printf("memory read after freeing last block: \n");
+	// show_alloc_mem();
+	// printf("-------------------------------------\n");
+	// free(tab[8]);
+	// printf("memory read after freeing second last: \n");
+	// show_alloc_mem();
+	// printf("-------------------------------------\n");
+	// free(tab[4]);
+	// printf("memory read after freeing fifth: \n");
+	// show_alloc_mem();
+	// printf("-------------------------------------\n");
+	// free(tab[6]);
+	// printf("memory read after freeing 6th: \n");
+	// show_alloc_mem();
+	// printf("-------------------------------------\n");
+	// free(tab[5]);
+	// printf("memory read after freeing 7th: \n");
+	// show_alloc_mem();
+	// printf("-------------------------------------\n");
+
+/*
 	srand(time(NULL));
 	char *tab[10000];
 	int i = 0;
@@ -124,6 +125,7 @@ int		main(void)
 	printf("Number of realloc wo free : %d\n", nbr_realloc);
 	printf("Number of realloc with free before : %d\n", nbr_realloc_free);
 	// show_alloc_mem();
+	*/
 	return (0);
 }
 

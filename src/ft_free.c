@@ -19,21 +19,21 @@ static	void	free_tinysmall(void *ptr, size_t size_wo_flags)
 
 	current_heap = find_current_heap(ptr);
 	ft_remove_from_list(ptr);
-	if (size_wo_flags < TINY_MAX_SIZE)
+	if (size_wo_flags - HDR_SIZE < TINY_MAX_SIZE)
 	{
 		ptr = ft_change_header_to_free(ptr, &(g_ptr.tiny_free_begin));
-		max_chunk_size = (TINY_MAX_SIZE * getpagesize()) - FTR_HEAP - HDR_HEAP;
-		// if ((ptr == current_heap + HDR_HEAP) && (current_heap != g_ptr.begin_heap))
-		// 	if (ft_size_wo_flags(((t_chunk*)ptr)->mchunk_size) == max_chunk_size)
-		// 		ft_return_pages(ptr, max_chunk_size, current_heap, &(g_ptr.tiny_free_begin));
+		max_chunk_size = (TINY_PAGES * getpagesize()) - FTR_HEAP - HDR_HEAP;
+		if ((ptr == (void*)current_heap + HDR_HEAP) && (current_heap != g_ptr.begin_heap))
+			if (ft_size_wo_flags(((t_chunk*)ptr)->mchunk_size) == max_chunk_size)
+				ft_return_pages(ptr, max_chunk_size, current_heap, &(g_ptr.tiny_free_begin));
 	}	
-	else if (size_wo_flags < SMALL_MAX_SIZE)
+	else if (size_wo_flags - HDR_SIZE < SMALL_MAX_SIZE)
 	{	
 		ft_change_header_to_free(ptr, &(g_ptr.small_free_begin));
-		max_chunk_size = (SMALL_MAX_SIZE * getpagesize()) - FTR_HEAP - HDR_HEAP;
-		// if ((ptr == current_heap + HDR_HEAP) && (current_heap != g_ptr.begin_heap))
-			// if (ft_size_wo_flags(((t_chunk*)ptr)->mchunk_size) == max_chunk_size)
-				// ft_return_pages(ptr, max_chunk_size, current_heap, &(g_ptr.small_free_begin));
+		max_chunk_size = (SMALL_PAGES * getpagesize()) - FTR_HEAP - HDR_HEAP;
+		if ((ptr == current_heap + HDR_HEAP) && (current_heap != g_ptr.begin_heap))
+			if (ft_size_wo_flags(((t_chunk*)ptr)->mchunk_size) == max_chunk_size)
+				ft_return_pages(ptr, max_chunk_size, current_heap, &(g_ptr.small_free_begin));
 	}
 }
 

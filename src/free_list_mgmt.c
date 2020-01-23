@@ -82,8 +82,7 @@ void			*ft_change_header_to_free(void *ptr, void **begin_free)
 		current_heap = find_current_heap(ptr);
 		if (next < (t_chunk*)(current_heap->current_footer))
 			set_size(next->mchunk_size | P_FLAG, next);
-		// return ft_defrag(ptr, current_heap);
-		return ptr;
+		return ft_defrag(ptr, current_heap);
 	}	
 }
 

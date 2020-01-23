@@ -6,7 +6,7 @@
 /*   By: gvannest <gvannest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 17:15:20 by gvannest          #+#    #+#             */
-/*   Updated: 2020/01/23 16:51:39 by gvannest         ###   ########.fr       */
+/*   Updated: 2020/01/23 18:57:05 by gvannest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,9 @@ typedef struct		s_heapfooter
 
 extern t_ptr	g_ptr;
 
-void				*malloc(size_t size);
-void				free(void *ptr);
-void				*realloc(void *ptr, size_t size);
+void				*ft_malloc(size_t size);
+void				ft_free(void *ptr);
+void				*ft_realloc(void *ptr, size_t size);
 
 
 void				*call_mmap(size_t call_size);

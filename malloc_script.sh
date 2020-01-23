@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/sh
 
 export DYLD_LIBRARY_PATH=.
 export DYLD_INSERT_LIBRARIES='libft_malloc.so'
@@ -6,8 +6,8 @@ export DYLD_FORCE_FLAT_NAMESPACE=1
 
 # ls ~
 # ls -Rgals /
-ls -Rgals ~
-# ./test
+# ls -Rgals ~
+./test
 
 # env DYLD_LIBRARY_PATH=.
 # env DYLD_INSERT_LIBRARIES='libft_malloc.so'
