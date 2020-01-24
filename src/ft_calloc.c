@@ -6,12 +6,14 @@
 void        *ft_calloc(size_t nmemb, size_t size)
 {
     void*   ptr_user;
+    size_t  size_chunk;
 
     if (!nmemb || !size)
         return NULL;
     if (!(ptr_user = ft_malloc(nmemb * size)))
         return NULL;
-    ft_bzero(ptr_user, nmemb * size);
+    size_chunk = ft_size_wo_flags(((t_chunk*)ptr_user)->mchunk_size);    
+    ft_bzero(ptr_user, size_chunk);
     return ptr_user;
 }
 

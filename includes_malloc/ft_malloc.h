@@ -6,7 +6,7 @@
 /*   By: gvannest <gvannest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 17:15:20 by gvannest          #+#    #+#             */
-/*   Updated: 2020/01/24 15:28:24 by gvannest         ###   ########.fr       */
+/*   Updated: 2020/01/24 17:31:43 by gvannest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@
 
 # define HDR_SIZE			32
 
-# define FTR_HEAP			8
-# define HDR_HEAP			8
+# define FTR_HEAP			16
+# define HDR_HEAP			16
 
 typedef struct		s_ptr
 {

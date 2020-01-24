@@ -41,10 +41,10 @@ size_t		align_size(size_t size_user)
 {
 	size_t size_modif;
 
-	size_modif = (size_user & 0xfffffffffffffff8);
+	size_modif = (size_user & 0xfffffffffffffff0);
 	if (size_modif == size_user)
 		return size_user;
-	return (size_modif + 0x8);
+	return (size_modif + 0x10);
 }
 
 size_t		align_large_size(size_t size_user)
