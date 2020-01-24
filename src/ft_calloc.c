@@ -3,14 +3,24 @@
 
 #include "ft_malloc.h"
 
-void        *calloc(size_t nmemb, size_t size)
+void        *ft_calloc(size_t nmemb, size_t size)
 {
     void*   ptr_user;
 
     if (!nmemb || !size)
         return NULL;
-    if (!(ptr_user = malloc(nmemb * size)))
+    if (!(ptr_user = ft_malloc(nmemb * size)))
         return NULL;
     ft_bzero(ptr_user, nmemb * size);
+    return ptr_user;
+}
+
+void        *calloc(size_t nmemb, size_t size)
+{
+    void*   ptr_user;
+
+    pthread_mutex_lock(&g_mutex);
+	ptr_user = ft_calloc(nmemb, size);
+	pthread_mutex_unlock(&g_mutex);
     return ptr_user;
 }

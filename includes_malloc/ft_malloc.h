@@ -6,7 +6,7 @@
 /*   By: gvannest <gvannest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 17:15:20 by gvannest          #+#    #+#             */
-/*   Updated: 2020/01/23 18:57:05 by gvannest         ###   ########.fr       */
+/*   Updated: 2020/01/24 14:44:22 by gvannest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <sys/mman.h>
 # include <unistd.h>
 # include <stdlib.h>
+# include <pthread.h>
 # include "libft.h"
 
 # define F_FLAG 4
@@ -38,6 +39,7 @@ typedef struct		s_ptr
 	void			*small_free_begin;
 	void			*begin_alloc;
 	void			*begin_heap;
+	pthread_mutex_t	mutex;
 }					t_ptr;
 
 /*
@@ -62,13 +64,17 @@ typedef struct		s_heapfooter
 	void			*next_heap_hdr;
 }					t_heapfooter;
 
-extern t_ptr	g_ptr;
+extern t_ptr			g_ptr;
+extern pthread_mutex_t 	g_mutex;
+
+void				*malloc(size_t size);
+void				free(void *ptr);
+void				*realloc(void *ptr, size_t size);
+void       			*calloc(size_t nmemb, size_t size);
+
 
 void				*ft_malloc(size_t size);
 void				ft_free(void *ptr);
-void				*ft_realloc(void *ptr, size_t size);
-
-
 void				*call_mmap(size_t call_size);
 
 size_t				ft_add_flags_to_size(size_t size_init, char a, char m, char p);
@@ -105,7 +111,6 @@ size_t				ft_flags(size_t size);
 
 void				update_freelist(t_chunk *prev_free, t_chunk* current, t_chunk *next_free);
 
-void       			*calloc(size_t nmemb, size_t size);
 void       		*ft_defrag(void *chunk_freed, t_heapheader *current_heap);
 void        	ft_return_pages(void *free_chunk, size_t max_chunk_size, t_heapheader *current_heap, void **begin_free);
 void			ft_update_prev_footer(void *ptr);

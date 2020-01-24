@@ -62,7 +62,7 @@ static	int		free_large(void *ptr, size_t size_wo_flags)
 	return munmap(ptr, size_wo_flags + HDR_HEAP + FTR_HEAP);
 }
 
-void			free(void *ptr)
+void			ft_free(void *ptr)
 {
 	size_t			chunk_size;
 	size_t			size_wo_flags;
@@ -86,4 +86,11 @@ void			free(void *ptr)
 	}
 	else
 		free_tinysmall(ptr, size_wo_flags);
+}
+
+void			free(void *ptr)
+{
+	pthread_mutex_lock(&g_mutex);
+	ft_free(ptr);
+	pthread_mutex_unlock(&g_mutex);
 }

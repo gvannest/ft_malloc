@@ -6,7 +6,7 @@
 #    By: gvannest <gvannest@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/03 14:13:27 by gvannest          #+#    #+#              #
-#    Updated: 2020/01/23 18:30:36 by gvannest         ###   ########.fr        #
+#    Updated: 2020/01/24 14:40:30 by gvannest         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ endif
 
 # COMPILATION
 CC = gcc
-CFLAGS = -Wall -Wextra #-Werror #-Wpadded -Weverything
+CFLAGS = -Wall -Wextra -Werror #-Wpadded -Weverything
 ADDFLAGS = -g
 SYSFLAG =  -shared
 
@@ -49,7 +49,8 @@ SRC_NAME = \
 	ft_show_alloc_mem.c \
 	ft_realloc.c \
 	headers.c \
-	ft_defrag.c
+	ft_defrag.c \
+	ft_calloc.c
 	
 
 OBJ_NAME = $(SRC_NAME:.c=.o)

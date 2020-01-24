@@ -17,10 +17,10 @@ static void *ft_new_alloc(void *ptr, size_t size, size_t old_size)
 	void *new_ptr;
 
 	old_size = old_size > size ? size : old_size;
-	if (!(new_ptr = malloc(size)))
+	if (!(new_ptr = ft_malloc(size)))
 		return NULL;
 	ft_memcpy(new_ptr, ptr, old_size);
-	free(ptr);
+	ft_free(ptr);
 	return new_ptr;
 }
 
@@ -115,7 +115,7 @@ static void	*ft_reduce_chunk(void *ptr, size_t new_chunk_size, size_t actual_siz
 	return (ptr + HDR_SIZE);
 }
 
-void *realloc(void *ptr, size_t size)
+void *ft_realloc(void *ptr, size_t size)
 {
 	t_chunk	*next_chunk;
 	size_t			size_wo_flags;
@@ -124,10 +124,10 @@ void *realloc(void *ptr, size_t size)
 	t_heapheader	*current_heap;
 
 	if (!ptr)
-		return malloc(size);
+		return ft_malloc(size);
 	if (ptr && !size)
 	{
-		free(ptr);
+		ft_free(ptr);
 		return NULL;
 	}
 	ptr = ptr - HDR_SIZE;
@@ -156,4 +156,14 @@ void *realloc(void *ptr, size_t size)
 		return ft_next_chunk_free(ptr, (t_chunk *)next_chunk, size_aligned, size_wo_flags, current_heap);
 	return ft_new_alloc(ptr + HDR_SIZE, size_aligned, size_wo_flags - HDR_SIZE);
 
+}
+
+void 	*realloc(void *ptr, size_t size)
+{
+	void	*new_ptr;
+
+	pthread_mutex_lock(&g_mutex);
+	new_ptr = ft_realloc(ptr, size);
+	pthread_mutex_unlock(&g_mutex);
+	return new_ptr;
 }
