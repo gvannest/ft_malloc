@@ -6,7 +6,7 @@
 /*   By: gvannest <gvannest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 17:15:20 by gvannest          #+#    #+#             */
-/*   Updated: 2020/01/24 14:44:22 by gvannest         ###   ########.fr       */
+/*   Updated: 2020/01/24 15:28:24 by gvannest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ typedef struct		s_ptr
 	void			*small_free_begin;
 	void			*begin_alloc;
 	void			*begin_heap;
-	pthread_mutex_t	mutex;
 }					t_ptr;
 
 /*
