@@ -75,6 +75,8 @@ void       			*calloc(size_t nmemb, size_t size);
 void				*ft_malloc(size_t size);
 void				ft_free(void *ptr);
 void				*call_mmap(size_t call_size);
+size_t      		malloc_size(const void *ptr);
+size_t      		malloc_good_size(size_t size);
 
 size_t				ft_add_flags_to_size(size_t size_init, char a, char m, char p);
 size_t				ft_size_wo_flags(size_t size);

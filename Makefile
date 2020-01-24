@@ -50,8 +50,8 @@ SRC_NAME = \
 	ft_realloc.c \
 	headers.c \
 	ft_defrag.c \
-	ft_calloc.c
-	
+	ft_calloc.c \
+	malloc_size.c
 
 OBJ_NAME = $(SRC_NAME:.c=.o)
 

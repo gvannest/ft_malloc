@@ -8,8 +8,6 @@ void        *ft_calloc(size_t nmemb, size_t size)
     void*   ptr_user;
     size_t  size_to_bz;
 
-    if (!nmemb || !size)
-        return NULL;
     if (!(ptr_user = ft_malloc(nmemb * size)))
         return NULL;
     size_to_bz = ft_size_wo_flags(((t_chunk*)(ptr_user - HDR_SIZE))->mchunk_size) - HDR_SIZE;    
