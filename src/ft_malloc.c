@@ -17,6 +17,7 @@ static void		ft_set_header_footer_heap(void *ptr_heap, size_t call_size)
 	t_heapfooter	t_footer;
 	t_heapfooter	*prev_footer;
 	t_heapheader	t_header;
+	
 	t_footer.next_heap_hdr = NULL;
 	t_header.current_footer = ptr_heap + call_size - FTR_HEAP;
 	prev_footer = prev_footer_ptr(ptr_heap);
@@ -45,9 +46,7 @@ static void		*ft_tiny_small(size_t size, size_t call_size, void **begin_free)
 		return new_allocated_chunk(*begin_free, size, begin_free);
 	}
 	else if ((ptr = search_free(*begin_free, size)))
-	{
 		return new_allocated_chunk(ptr, size, begin_free);
-	}
 	else
 	{
 		if (!(ptr = call_mmap(call_size)))
