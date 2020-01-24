@@ -6,8 +6,8 @@
 
 #include "ft_malloc.h"
 
-#define EINVAL 1
-#define ENOMEM 2
+#define ENOMEM 12
+#define EINVAL 22
 
 int     posix_memalign(void **memptr, size_t alignment, size_t size)
 {
