@@ -8,7 +8,7 @@ size_t      malloc_size(const void *ptr)
  {
     if (!find_current_heap((void*)ptr - HDR_SIZE))
         return (0);
-     return (ft_size_wo_flags(((t_chunk*)(ptr - HDR_SIZE))->mchunk_size) - HDR_SIZE);
+     return (ft_size_wo_flags(((t_chunk*)(ptr - HDR_SIZE))->mchunk_size - HDR_SIZE));
  }
 
 
