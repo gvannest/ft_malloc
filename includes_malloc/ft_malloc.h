@@ -6,7 +6,7 @@
 /*   By: gvannest <gvannest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 17:15:20 by gvannest          #+#    #+#             */
-/*   Updated: 2020/01/24 17:52:50 by gvannest         ###   ########.fr       */
+/*   Updated: 2020/01/25 14:18:19 by gvannest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,10 @@ size_t				align_size(size_t size_user);
 size_t				align_large_size(size_t size_user);
 
 void				show_alloc_mem(void);
+void				show_alloc_mem_complete(void);
 
 void				print_free_chunk(void *ptr_free);
-void				print_alloc_chunk(void *ptr_alloc);
+void				dump_hex_memory(void *ptr_alloc, size_t size_to_print);
 void				print_info_heap(void *ptr_heap, size_t heap_size);
 
 t_chunk				*ft_find_prev(void *ptr, void *begin_free);

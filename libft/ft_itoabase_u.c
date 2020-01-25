@@ -1,17 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itoabase.c                                      :+:      :+:    :+:   */
+/*   ft_itoabase_u.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gvannest <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gvannest <gvannest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 17:14:08 by gvannest          #+#    #+#             */
-/*   Updated: 2018/01/25 15:25:24 by gvannest         ###   ########.fr       */
+/*   Updated: 2020/01/25 13:37:20 by gvannest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
 
 static int		ft_countdigits(uintmax_t value, char *base)
 {
@@ -31,9 +30,11 @@ static int		ft_countdigits(uintmax_t value, char *base)
 static void		ft_fillitoa(char *str, uintmax_t l, char *base)
 {
 	int i;
+	int k;
 
 	i = 0;
-	while (l > 0)
+	k = ft_countdigits(l, base);
+	while (i < k)
 	{
 		str[i] = base[l % ft_strlen(base)];
 		l = l / ft_strlen(base);
