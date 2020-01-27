@@ -127,7 +127,7 @@ void		ft_update_chunk_after_free(void *prev_ptr, size_t new_size, char prev_is_f
 void			*ft_move_free_header(void *ptr, size_t chunk_size, size_t size_diff);
 void		*ft_next_chunk_free(void *ptr, t_chunk *next_chunk, size_t size_user, t_heapheader *current_heap);
 void		*ft_reduce_chunk(void *ptr, size_t new_chunk_size, size_t actual_size, char heap_type);
-
+char		control_ptr(void* ptr);
 
 
 #endif

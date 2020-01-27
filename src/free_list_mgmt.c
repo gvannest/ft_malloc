@@ -6,7 +6,7 @@
 /*   By: gvannest <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/25 14:50:28 by gvannest          #+#    #+#             */
-/*   Updated: 2020/01/27 15:04:24 by cpaquet          ###   ########.fr       */
+/*   Updated: 2020/01/27 17:39:55 by cpaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,4 +79,26 @@ void			*ft_change_header_to_free(void *ptr, void **begin_free)
 			set_size(next->mchunk_size | P_FLAG, next);
 		return (ft_defrag(ptr, current_heap));
 	}
+}
+
+char			control_ptr(void *ptr)
+{
+	void			*heap_footer;
+	void			*ptr_chunk;
+	t_heapheader	*current_heap;
+
+	current_heap = find_current_heap(ptr);
+	heap_footer = current_heap->current_footer;
+	if (!current_heap)
+		return (0);
+	if (!((ptr > (void*)current_heap) && (ptr < heap_footer)))
+		return (0);
+	ptr_chunk = (void*)current_heap + HDR_HEAP;
+	while (ptr_chunk + FTR_HEAP < heap_footer)
+	{
+		if (ptr == ptr_chunk)
+			return (1);
+		ptr_chunk += ft_size_wo_flags(((t_chunk*)ptr_chunk)->mchunk_size);
+	}
+	return (0);
 }

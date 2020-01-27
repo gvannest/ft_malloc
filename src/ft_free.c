@@ -16,15 +16,11 @@ void			ft_free(void *ptr)
 {
 	size_t			chunk_size;
 	size_t			size_wo_flags;
-	t_heapheader	*current_heap;
 
 	if (!ptr)
 		return ;
 	ptr = ptr - HDR_SIZE;
-	current_heap = find_current_heap(ptr);
-	if (!current_heap || !((ptr > (void*)current_heap) &&
-				(ptr < current_heap->current_footer)) ||
-			((t_chunk*)ptr)->mchunk_size & F_FLAG)
+	if (!(control_ptr(ptr)) || !(((t_chunk*)ptr)->mchunk_size & F_FLAG))
 		return ;
 	chunk_size = ((t_chunk*)ptr)->mchunk_size;
 	size_wo_flags = ft_size_wo_flags(chunk_size);

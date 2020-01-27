@@ -5,8 +5,8 @@ export DYLD_INSERT_LIBRARIES='libft_malloc.so'
 export DYLD_FORCE_FLAT_NAMESPACE=1
 
 $@
-# exa -lisaR ~
-ls -Rgalis /
+#exa -lisaR ~
+# ls -Rgals ~/Library
 #ls -R /tmp
 # ./tests
 # ag malloc ~

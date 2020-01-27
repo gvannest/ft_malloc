@@ -6,7 +6,7 @@
 /*   By: gvannest <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/25 16:24:46 by gvannest          #+#    #+#             */
-/*   Updated: 2020/01/27 13:45:34 by cpaquet          ###   ########.fr       */
+/*   Updated: 2020/01/27 17:50:34 by cpaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,17 +51,17 @@ void			*ft_realloc(void *ptr, size_t size)
 	if (ptr && !size)
 	{
 		ft_free(ptr);
+		return (ft_malloc(0));
+	}
+	ptr = ptr - HDR_SIZE;
+	if (!(control_ptr(ptr)) || ((t_chunk*)ptr)->mchunk_size & F_FLAG)
+	{
+		ft_free(ptr);
 		return (NULL);
 	}
 	size_al = align_size(size);
-	ptr = ptr - HDR_SIZE;
 	current_heap = find_current_heap(ptr);
 	size_wo_flags = ft_size_wo_flags(((t_chunk*)ptr)->mchunk_size);
-	if (!current_heap || !((ptr > (void*)current_heap) &&
-				(ptr < current_heap->current_footer)))
-		return (ptr + HDR_SIZE);
-	if (!ptr || (ptr && ((t_chunk*)ptr)->mchunk_size & F_FLAG))
-		return (NULL);
 	return (ft_realloc_dispatch(ptr, size_al, current_heap, size_wo_flags));
 }
 
