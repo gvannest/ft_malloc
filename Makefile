@@ -51,6 +51,7 @@ SRC_NAME = \
 	globals.c \
 	headers.c \
 	large_chunk.c \
+	list_mgmt.c \
 	malloc_size.c \
 	new_allocated_chunck.c \
 	print_bonus.c \
