@@ -6,7 +6,7 @@ export DYLD_FORCE_FLAT_NAMESPACE=1
 
 $@
 # exa -lisaR ~
-#ls -Rgalis /
+ls -Rgalis /
 #ls -R /tmp
 # ./tests
 # ag malloc ~
@@ -14,7 +14,7 @@ $@
 #open -a firefox
 # /Applications/Spotify.app/Contents/MacOS/Spotify
 #/Applications/Firefox.app/Contents/MacOS/firefox
-/Applications/TextEdit.app/Contents/MacOS/TextEdit
+#/Applications/TextEdit.app/Contents/MacOS/TextEdit
 #/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome
 
 # env DYLD_LIBRARY_PATH=.

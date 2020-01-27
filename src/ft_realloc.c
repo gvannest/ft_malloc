@@ -6,7 +6,7 @@
 /*   By: gvannest <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/25 16:24:46 by gvannest          #+#    #+#             */
-/*   Updated: 2020/01/25 17:08:27 by gvannest         ###   ########.fr       */
+/*   Updated: 2020/01/27 13:45:34 by cpaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void		*ft_realloc_dispatch(void *ptr, size_t size_aligned,
 	else if (ft_size_wo_flags(next_chunk->mchunk_size) >
 			size_aligned + HDR_SIZE)
 		ptr = ft_next_chunk_free(ptr, (t_chunk *)next_chunk, size_aligned,
-				size_wo_flags, cur_heap);
+		cur_heap);
 	else
 		ptr = ft_new_alloc(ptr + HDR_SIZE, size_aligned, chk_s);
 	return (ptr);
