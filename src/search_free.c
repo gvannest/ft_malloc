@@ -6,7 +6,7 @@
 /*   By: gvannest <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/25 14:34:30 by gvannest          #+#    #+#             */
-/*   Updated: 2020/01/25 14:48:57 by gvannest         ###   ########.fr       */
+/*   Updated: 2020/01/27 14:23:41 by cpaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,9 @@ void		*search_free(void *free_list, size_t size_user)
 	while (list_copy)
 	{
 		if (ft_size_wo_flags(list_copy->mchunk_size) >= (size_user + HDR_SIZE))
-			return (void*)list_copy;
+			return ((void*)list_copy);
 		else
 			list_copy = list_copy->next_chunk;
 	}
-	return NULL;
+	return (NULL);
 }
-
