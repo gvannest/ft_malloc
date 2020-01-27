@@ -6,7 +6,7 @@
 /*   By: gvannest <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/25 16:01:06 by gvannest          #+#    #+#             */
-/*   Updated: 2020/01/25 16:18:51 by gvannest         ###   ########.fr       */
+/*   Updated: 2020/01/27 15:06:09 by cpaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void		free_tiny(void *ptr, t_heapheader *current_heap, size_t tmp_s)
 static void		free_small(void *ptr, t_heapheader *current_heap, size_t tmp_s)
 {
 	size_t			max_chunk_size;
-	
+
 	ft_change_header_to_free(ptr, &(g_ptr.small_free_begin));
 	max_chunk_size = (SMALL_PAGES * getpagesize()) - FTR_HEAP - HDR_HEAP;
 	if ((ptr == current_heap + HDR_HEAP) &&

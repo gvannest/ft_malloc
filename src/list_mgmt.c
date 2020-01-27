@@ -18,27 +18,6 @@ void			ft_remove_from_list(t_chunk *chunk)
 	*begin_list = (*begin_list == chunk ? chunk->next_chunk : *begin_list);
 }
 
-static void		ft_insert_list(void *ptr, void **begin_free)
-{
-	t_chunk		*prev_free;
-	t_chunk		*next_free;
-
-	prev_free = ft_find_prev(ptr, (t_chunk*)(*begin_free));
-	next_free = NULL;
-	if (*begin_free > ptr)
-	{
-		ft_add_free_block(ptr, NULL, *begin_free);
-		((t_chunk*)(*begin_free))->prev_chunk = (t_chunk*)ptr;
-		*begin_free = ptr;
-	}
-	else
-	{
-		next_free = prev_free->next_chunk;
-		ft_add_free_block(ptr, prev_free, next_free);
-		update_freelist(prev_free, ptr, next_free);
-	}
-}
-
 void			update_freelist(t_chunk *prev_free, t_chunk *current,
 		t_chunk *next_free)
 {
@@ -51,4 +30,19 @@ void			update_freelist(t_chunk *prev_free, t_chunk *current,
 	}
 	if (next_free)
 		next_free->prev_chunk = (current ? current : prev_free);
+}
+
+t_chunk			*ft_find_prev(void *ptr, void *begin)
+{
+	t_chunk *prev_chk;
+	t_chunk *begin_free;
+
+	begin_free = (t_chunk*)begin;
+	prev_chk = (NULL);
+	while (begin_free && (void*)begin_free < ptr)
+	{
+		prev_chk = begin_free;
+		begin_free = begin_free->next_chunk;
+	}
+	return (prev_chk);
 }

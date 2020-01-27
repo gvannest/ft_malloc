@@ -6,7 +6,7 @@
 /*   By: gvannest <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/25 16:07:20 by gvannest          #+#    #+#             */
-/*   Updated: 2020/01/27 14:25:51 by cpaquet          ###   ########.fr       */
+/*   Updated: 2020/01/27 15:08:59 by cpaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ t_heapheader	*find_current_heap(void *ptr_chunk)
 	return (prev_heap);
 }
 
-size_t				align_size(size_t size_user)
+size_t			align_size(size_t size_user)
 {
 	size_t size_modif;
 
@@ -67,7 +67,7 @@ size_t				align_size(size_t size_user)
 	return (size_modif + 0x10);
 }
 
-size_t				align_large_size(size_t size_user)
+size_t			align_large_size(size_t size_user)
 {
 	size_t size_modif;
 
@@ -75,19 +75,4 @@ size_t				align_large_size(size_t size_user)
 	if (size_modif == size_user)
 		return (size_user);
 	return (size_modif + 0x1000);
-}
-
-t_chunk				*ft_find_prev(void *ptr, void *begin)
-{
-	t_chunk *prev_chk;
-	t_chunk *begin_free;
-
-	begin_free = (t_chunk*)begin;
-	prev_chk = (NULL);
-	while (begin_free && (void*)begin_free < ptr)
-	{
-		prev_chk = begin_free;
-		begin_free = begin_free->next_chunk;
-	}
-	return (prev_chk);
 }

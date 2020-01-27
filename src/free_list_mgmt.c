@@ -38,6 +38,27 @@ static void		ft_add_free_block(void *ptr, t_chunk *prev_chk,
 	*(t_chunk*)ptr = chunk;
 }
 
+static void		ft_insert_list(void *ptr, void **begin_free)
+{
+	t_chunk		*prev_free;
+	t_chunk		*next_free;
+
+	prev_free = ft_find_prev(ptr, (t_chunk*)(*begin_free));
+	next_free = NULL;
+	if (*begin_free > ptr)
+	{
+		ft_add_free_block(ptr, NULL, *begin_free);
+		((t_chunk*)(*begin_free))->prev_chunk = (t_chunk*)ptr;
+		*begin_free = ptr;
+	}
+	else
+	{
+		next_free = prev_free->next_chunk;
+		ft_add_free_block(ptr, prev_free, next_free);
+		update_freelist(prev_free, ptr, next_free);
+	}
+}
+
 void			*ft_change_header_to_free(void *ptr, void **begin_free)
 {
 	t_heapheader	*current_heap;
