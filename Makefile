@@ -53,11 +53,10 @@ SRC_NAME = \
 	large_chunk.c \
 	malloc_size.c \
 	new_allocated_chunck.c \
+	print_bonus.c \
     search_free.c \
 	size_flags.c \
-	utils_mmap.c \
-
-	
+	utils_mmap.c 	
 
 
 OBJ_NAME = $(SRC_NAME:.c=.o)
