@@ -116,4 +116,18 @@ void				update_freelist(t_chunk *prev_free, t_chunk* current, t_chunk *next_free
 void       		*ft_defrag(void *chunk_freed, t_heapheader *current_heap);
 void        	ft_return_pages(void *free_chunk, size_t max_chunk_size, t_heapheader *current_heap, void **begin_free);
 void			ft_update_prev_footer(void *ptr);
+int				free_large(void *ptr, size_t size_wo_flags);
+void			free_tinysmall(void *ptr, size_t size_wo_flags);
+void		*ft_new_alloc(void *ptr, size_t size, size_t old_size);
+void		*ft_reduce_chunk(void *ptr, size_t new_chunk_size, size_t actual_size, char heap_type);
+void		*ft_next_chunk_free(void *ptr, t_chunk *next_chunk, size_t size_user, size_t size_wo_flags, t_heapheader *current_heap);
+char		ft_is_same_heap_size(size_t size_chunk, size_t size_user);
+void		ft_update_current_size(void *ptr, size_t new_size);
+void		ft_update_chunk_after_free(void *prev_ptr, size_t new_size, char prev_is_free, t_heapheader *current_heap);
+void			*ft_move_free_header(void *ptr, size_t chunk_size, size_t size_diff);
+void		*ft_next_chunk_free(void *ptr, t_chunk *next_chunk, size_t size_user, size_t size_wo_flags, t_heapheader *current_heap);
+void		*ft_reduce_chunk(void *ptr, size_t new_chunk_size, size_t actual_size, char heap_type);
+
+
+
 #endif

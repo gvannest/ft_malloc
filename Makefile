@@ -38,20 +38,27 @@ INC_PATH = ./includes_malloc\
 
 # SOURCES
 SRC_NAME = \
-    globals.c \
-    ft_malloc.c \
-	utils_mmap.c \
 	free_list_mgmt.c \
-	size_flags.c \
-	ft_free.c \
-	large_chunk.c \
-	new_allocated_chunck.c \
-	ft_show_alloc_mem.c \
-	ft_realloc.c \
-	headers.c \
-	ft_defrag.c \
 	ft_calloc.c \
-	malloc_size.c
+	ft_free_sizes.c \
+	ft_defrag.c \
+	ft_free.c \
+    ft_malloc.c \
+	ft_realloc_apply.c \
+	ft_realloc_helpers.c \
+	ft_realloc.c \
+	ft_show_alloc_mem.c \
+	globals.c \
+	headers.c \
+	large_chunk.c \
+	malloc_size.c \
+	new_allocated_chunck.c \
+    search_free.c \
+	size_flags.c \
+	utils_mmap.c \
+
+	
+
 
 OBJ_NAME = $(SRC_NAME:.c=.o)
 

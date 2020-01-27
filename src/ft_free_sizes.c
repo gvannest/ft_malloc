@@ -27,6 +27,8 @@ static void		free_tiny(void *ptr, t_heapheader *current_heap, size_t tmp_s)
 
 static void		free_small(void *ptr, t_heapheader *current_heap, size_t tmp_s)
 {
+	size_t			max_chunk_size;
+	
 	ft_change_header_to_free(ptr, &(g_ptr.small_free_begin));
 	max_chunk_size = (SMALL_PAGES * getpagesize()) - FTR_HEAP - HDR_HEAP;
 	if ((ptr == current_heap + HDR_HEAP) &&
@@ -39,7 +41,6 @@ static void		free_small(void *ptr, t_heapheader *current_heap, size_t tmp_s)
 void			free_tinysmall(void *ptr, size_t size_wo_flags)
 {
 	t_heapheader	*current_heap;
-	size_t			max_chunk_size;
 	size_t			tmp_s;
 
 	current_heap = find_current_heap(ptr);

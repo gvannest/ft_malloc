@@ -33,8 +33,7 @@ void			ft_free(void *ptr)
 	if (chunk_size & M_FLAG)
 	{
 		if (free_large(ptr - HDR_HEAP, size_wo_flags) == -1)
-			ft_printf("\x1B[31mError while calling munmap
-					on large chunk\x1B[0m\n");
+			ft_printf("\x1B[31mError while calling munmap on large chunk\x1B[0m\n");
 		return ;
 	}
 	else

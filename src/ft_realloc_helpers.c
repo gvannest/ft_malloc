@@ -12,7 +12,7 @@
 
 #include "ft_malloc.h"
 
-static void			*ft_move_free_header(void *ptr, size_t chunk_size, size_t size_diff)
+void			*ft_move_free_header(void *ptr, size_t chunk_size, size_t size_diff)
 {
 	size_t		flags;
 	size_t		current_free_size;
@@ -35,12 +35,12 @@ static void			*ft_move_free_header(void *ptr, size_t chunk_size, size_t size_dif
 	return (free_block + size_diff);
 }
 
-static void		ft_update_current_size(void *ptr, size_t new_size)
+void		ft_update_current_size(void *ptr, size_t new_size)
 {
 	set_size(new_size | ft_flags(((t_chunk*)ptr)->mchunk_size & ~F_FLAG), ptr);
 }
 
-static void		ft_update_chunk_after_free(void *prev_ptr, size_t new_size, char prev_is_free, t_heapheader *current_heap)
+void		ft_update_chunk_after_free(void *prev_ptr, size_t new_size, char prev_is_free, t_heapheader *current_heap)
 {
 	size_t size;
 
@@ -55,7 +55,7 @@ static void		ft_update_chunk_after_free(void *prev_ptr, size_t new_size, char pr
 	set_prev_size(ft_size_wo_flags(new_size), prev_ptr + new_size);
 }
 
-static char		ft_is_same_heap_size(size_t size_chunk, size_t size_user)
+char		ft_is_same_heap_size(size_t size_chunk, size_t size_user)
 {
 	if (size_chunk < TINY_MAX_SIZE && size_user < TINY_MAX_SIZE)
 		return (1);

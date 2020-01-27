@@ -6,7 +6,7 @@
 /*   By: gvannest <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/25 16:07:20 by gvannest          #+#    #+#             */
-/*   Updated: 2020/01/25 16:10:40 by gvannest         ###   ########.fr       */
+/*   Updated: 2020/01/27 12:23:45 by cpaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ void		*call_mmap(size_t call_size)
 {
 	void	*ptr;
 	
-	ptr = return (mmap(0, call_size, PROT_READ | PROT_WRITE,
-			MAP_ANONYMOUS | MAP_PRIVATE, -1, 0));
+	ptr = mmap(0, call_size, PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
 	if (ptr == MAP_FAILED)
 	{
 		ft_printf("\x1B[31mError while calling mmap\x1B[0m\n");
 		exit(EXIT_FAILURE);
 	}
+	return (ptr);
 }
 
 void		*prev_footer_ptr(void *ptr_heap)
