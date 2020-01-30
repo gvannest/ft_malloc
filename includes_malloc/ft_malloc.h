@@ -30,8 +30,8 @@
 
 # define HDR_SIZE			32
 
-# define FTR_HEAP			16
-# define HDR_HEAP			16
+# define FTR_HEAP			8
+# define HDR_HEAP			8
 
 typedef struct		s_ptr
 {

@@ -55,10 +55,7 @@ void			*ft_realloc(void *ptr, size_t size)
 	}
 	ptr = ptr - HDR_SIZE;
 	if (!(control_ptr(ptr)) || ((t_chunk*)ptr)->mchunk_size & F_FLAG)
-	{
-		ft_free(ptr);
 		return (NULL);
-	}
 	size_al = align_size(size);
 	current_heap = find_current_heap(ptr);
 	size_wo_flags = ft_size_wo_flags(((t_chunk*)ptr)->mchunk_size);

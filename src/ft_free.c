@@ -20,7 +20,7 @@ void			ft_free(void *ptr)
 	if (!ptr)
 		return ;
 	ptr = ptr - HDR_SIZE;
-	if (!(control_ptr(ptr)) || !(((t_chunk*)ptr)->mchunk_size & F_FLAG))
+	if (!(control_ptr(ptr)) || (((t_chunk*)ptr)->mchunk_size & F_FLAG))
 		return ;
 	chunk_size = ((t_chunk*)ptr)->mchunk_size;
 	size_wo_flags = ft_size_wo_flags(chunk_size);

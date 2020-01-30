@@ -88,13 +88,13 @@ char			control_ptr(void *ptr)
 	t_heapheader	*current_heap;
 
 	current_heap = find_current_heap(ptr);
-	heap_footer = current_heap->current_footer;
 	if (!current_heap)
 		return (0);
+	heap_footer = current_heap->current_footer;
 	if (!((ptr > (void*)current_heap) && (ptr < heap_footer)))
 		return (0);
 	ptr_chunk = (void*)current_heap + HDR_HEAP;
-	while (ptr_chunk + FTR_HEAP < heap_footer)
+	while (ptr_chunk < heap_footer)
 	{
 		if (ptr == ptr_chunk)
 			return (1);

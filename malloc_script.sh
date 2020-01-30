@@ -4,18 +4,22 @@ export DYLD_LIBRARY_PATH=.
 export DYLD_INSERT_LIBRARIES='libft_malloc.so'
 export DYLD_FORCE_FLAT_NAMESPACE=1
 
-$@
+# $@
 #exa -lisaR ~
 # ls -Rgals ~/Library
 #ls -R /tmp
 # ./tests
-# ag malloc ~
+ag malloc /
 #open -a /Users/gvannest/Google\ Chrome.app/Contents/MacOS/Google\ Chrome
 #open -a firefox
 # /Applications/Spotify.app/Contents/MacOS/Spotify
 #/Applications/Firefox.app/Contents/MacOS/firefox
 #/Applications/TextEdit.app/Contents/MacOS/TextEdit
 #/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome
+
+
+# gcc test5.c -L. -lft_malloc -I./libft/includes -L./libft -lft
+# ./a.out
 
 # env DYLD_LIBRARY_PATH=.
 # env DYLD_INSERT_LIBRARIES='libft_malloc.so'
