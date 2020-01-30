@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gvannest <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gvannest <gvannest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/25 15:05:37 by gvannest          #+#    #+#             */
-/*   Updated: 2020/01/27 15:06:52 by cpaquet          ###   ########.fr       */
+/*   Updated: 2020/01/30 12:06:03 by gvannest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,7 @@ void			ft_free(void *ptr)
 	if (chunk_size & M_FLAG)
 	{
 		if (free_large(ptr - HDR_HEAP, size_wo_flags) == -1)
-			ft_printf("\x1B[31mError: munmap failed for large chunk\x1B[0m\n");
-		return ;
+			exit(EXIT_FAILURE);
 	}
 	else
 		free_tinysmall(ptr, size_wo_flags);
